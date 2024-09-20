@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { darkBrown, darkGreen, lightGreen } from "../../util/colors";
 
 const Register = () => {
   return (
@@ -9,31 +10,49 @@ const Register = () => {
       <form className="form">
         <p className="title">Register </p>
         <p className="message">Signup now and get full access to our app. </p>
-        <div className="flex">
-          <label>
-            <input required placeholder="" type="text" className="input" />
-            <span>Business Name</span>
-          </label>
 
-          <label>
-            <input required placeholder="" type="email" className="input" />
-            <span>Email</span>
-          </label>
-        </div>
+        <label>
+          <input required placeholder="" type="text" className="input" />
+          <span>Business name</span>
+        </label>
 
         <label>
           <input required placeholder="" type="email" className="input" />
           <span>Email</span>
         </label>
 
+        <div className="flex">
+
+          <label>
+            <input required placeholder="" type="text" className="input" />
+            <span>Category</span>
+          </label>
+
+          <label>
+            <input required placeholder="" type="tel" className="input" />
+            <span>Phone number</span>
+          </label>
+        </div>
+
         <label>
-          <input required placeholder="" type="password" className="input" />
-          <span>Password</span>
+          <input required placeholder="" type="text" className="input" />
+          <span>State</span>
         </label>
+
         <label>
-          <input required placeholder="" type="password" className="input" />
-          <span>Confirm password</span>
+          <input required placeholder="" type="text" className="input" />
+          <span>Address</span>
         </label>
+        <div className="flex">
+          <label>
+            <input required placeholder="" type="password" className="input" />
+            <span>Password</span>
+          </label>
+          <label>
+            <input required placeholder="" type="password" className="input" />
+            <span>Confirm password</span>
+          </label>
+        </div>
         <button className="submit">Submit</button>
         <p className="signin">
           Already have an acount ? <a href="#">Signin</a>{" "}
@@ -59,7 +78,7 @@ const StyledWrapper = styled.div`
 
 .title {
   font-size: 28px;
-  color: royalblue;
+  color: ${darkBrown};
   font-weight: 600;
   letter-spacing: -1px;
   position: relative;
@@ -75,13 +94,13 @@ const StyledWrapper = styled.div`
   width: 16px;
   border-radius: 50%;
   left: 0px;
-  background-color: royalblue;
+  background-color: ${darkBrown};
 }
 
 .title::before {
   width: 18px;
   height: 18px;
-  background-color: royalblue;
+  background-color: ${darkBrown};
 }
 
 .title::after {
@@ -100,11 +119,11 @@ const StyledWrapper = styled.div`
 }
 
 .signin a {
-  color: royalblue;
+  color: ${darkBrown};
 }
 
 .signin a:hover {
-  text-decoration: underline royalblue;
+  text-decoration: underline ${darkBrown};
 }
 
 .flex {
@@ -147,13 +166,13 @@ const StyledWrapper = styled.div`
 }
 
 .form label .input:valid + span {
-  color: green;
+  color: ${darkGreen};
 }
 
 .submit {
   border: none;
   outline: none;
-  background-color: royalblue;
+  background-color: ${darkBrown};
   padding: 10px;
   border-radius: 10px;
   color: #fff;
