@@ -1,64 +1,82 @@
 import React from "react";
 import styled from "styled-components";
-import { darkBrown, darkGreen, lightGreen } from "../../util/colors";
+import { darkBrown, darkGreen } from "../../util/colors";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
     <StyledWrapper>
       <div className="w-full h-screen flex justify-center items-center">
-      <div className="p-5 shadow-lg rounded-sm">
-      <form className="form">
-        <p className="title">Register </p>
-        <p className="message">Signup now and get full access to our app. </p>
+        <div className="p-5 shadow-lg rounded-sm">
+          <form className="form">
+            <p className="title">Register </p>
+            <p className="message">Signup now and get full access to our app. </p>
 
-        <label>
-          <input required placeholder="" type="text" className="input" />
-          <span>Business name</span>
-        </label>
+            <label>
+              <input required placeholder="" type="text" className="input" />
+              <span>Business name</span>
+            </label>
 
-        <label>
-          <input required placeholder="" type="email" className="input" />
-          <span>Email</span>
-        </label>
+            <label>
+              <input required placeholder="" type="email" className="input" />
+              <span>Email</span>
+            </label>
 
-        <div className="flex">
+            <label>
+                <select required className="input">
+                  <option value="" disabled selected></option>
+                  <option value="plumber">Plumber</option>
+                  <option value="tailor">Tailor</option>
+                  <option value="carpenter">Carpenter</option>
+                  <option value="electrician">Electrician</option>
+                  <option value="painter">Painter</option>
+                </select>
+                <span>Category</span>
+            </label>
 
-          <label>
-            <input required placeholder="" type="text" className="input" />
-            <span>Category</span>
-          </label>
+            <div className="flex">
 
-          <label>
-            <input required placeholder="" type="tel" className="input" />
-            <span>Phone number</span>
-          </label>
+            <label>
+              <select required className="input">
+                <option value="" disabled selected></option>
+                <option value="Lagos">Lagos</option>
+                <option value="Abuja">Abuja</option>
+                <option value="Kano">Kano</option>
+                <option value="Rivers">Rivers</option>
+                <option value="Kaduna">Kaduna</option>
+                {/* Add more Nigerian states here */}
+              </select>
+              <span>State</span>
+            </label>
+
+              <label>
+                <input required placeholder="" type="tel" className="input" />
+                <span>Phone number</span>
+              </label>
+            </div>
+
+            <label>
+              <input required placeholder="" type="text" className="input" />
+              <span>Address</span>
+            </label>
+
+            <div className="flex">
+              <label>
+                <input required placeholder="" type="password" className="input" />
+                <span>Password</span>
+              </label>
+              <label>
+                <input required placeholder="" type="password" className="input" />
+                <span>Confirm password</span>
+              </label>
+            </div>
+
+            <button className="submit">Submit</button>
+            <p className="signin">
+              Already have an account? <Link to="/login">Signin</Link>{" "}
+            </p>
+          </form>
         </div>
-
-        <label>
-          <input required placeholder="" type="text" className="input" />
-          <span>State</span>
-        </label>
-
-        <label>
-          <input required placeholder="" type="text" className="input" />
-          <span>Address</span>
-        </label>
-        <div className="flex">
-          <label>
-            <input required placeholder="" type="password" className="input" />
-            <span>Password</span>
-          </label>
-          <label>
-            <input required placeholder="" type="password" className="input" />
-            <span>Confirm password</span>
-          </label>
-        </div>
-        <button className="submit">Submit</button>
-        <p className="signin">
-          Already have an acount ? <a href="#">Signin</a>{" "}
-        </p>
-      </form>
-      </div>
       </div>
     </StyledWrapper>
   );
