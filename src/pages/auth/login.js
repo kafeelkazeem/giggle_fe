@@ -1,48 +1,65 @@
-// Login.js
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import styled from "styled-components";
 import { darkBrown, darkGreen } from "../../util/colors";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { login, error } = useAuth();
+  const { login } = useAuth();
 
-  const handleLogin = async () => {
+  const handleLogin = async (values) => {
+    const { email, password } = values;
     const success = await login(email, password); // Wait for login to complete
-    
-    if (success) { // Only navigate if login was successful
+    if (success) {
       navigate('/home');
     }
   };
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    password: Yup.string().required('Password is required')
+  });
+
   return (
     <StyledWrapper>
       <div className="w-full h-screen flex justify-center items-center">
-      <div className="p-5 shadow-lg rounded-sm">
-      <form className="form">
-        <p className="title">Login</p>
-        <p className="message">Signup now and get full access to our app. </p>
+        <div className="p-5 shadow-lg rounded-sm">
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            validationSchema={validationSchema}
+            onSubmit={handleLogin}
+          >
+            {({ isSubmitting }) => (
+              <Form className="form">
+                <p className="title">Login</p>
+                <p className="message">Signup now and get full access to our app.</p>
 
-        <label>
-          <input required placeholder="" type="email" className="input" />
-          <span>Email</span>
-        </label>
+                <label>
+                  <Field name="email" type="email" className="input" placeholder="" />
+                  <span>Email</span>
+                  <ErrorMessage name="email" component="div" className="error" />
+                </label>
 
-        <label>
-          <input required placeholder="" type="password" className="input" />
-          <span>Password</span>
-        </label>
-          
-        <button className="submit">Login</button>
-        <p className="signin">
-          Dont't have an acount ? <Link to="/">Register</Link>{" "}
-        </p>
-      </form>
-      </div>
+                <label>
+                  <Field name="password" type="password" className="input" placeholder="" />
+                  <span>Password</span>
+                  <ErrorMessage name="password" component="div" className="error" />
+                </label>
+
+                <button type="submit" className="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Logging in...' : 'Login'}
+                </button>
+
+                <p className="signin">
+                  Don't have an account? <Link to="/">Register</Link>
+                </p>
+              </Form>
+            )}
+          </Formik>
+        </div>
       </div>
     </StyledWrapper>
   );

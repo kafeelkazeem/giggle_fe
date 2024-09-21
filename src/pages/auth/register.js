@@ -1,81 +1,129 @@
 import React from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import styled from "styled-components";
 import { darkBrown, darkGreen } from "../../util/colors";
 import { Link } from "react-router-dom";
 
 const Register = () => {
+  const validationSchema = Yup.object().shape({
+    businessName: Yup.string().required('Business name is required'),
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    category: Yup.string().required('Category is required'),
+    state: Yup.string().required('State is required'),
+    phoneNumber: Yup.string().matches(/^[0-9]+$/, 'Phone number must be numeric').required('Phone number is required'),
+    address: Yup.string().required('Address is required'),
+    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm password is required'),
+  });
+
+  const handleRegister = (values) => {
+    console.log('Form Values', values);
+    // Add your submit logic here
+  };
+
   return (
     <StyledWrapper>
       <div className="w-full h-screen flex justify-center items-center">
         <div className="p-5 shadow-lg rounded-sm">
-          <form className="form">
-            <p className="title">Register </p>
-            <p className="message">Signup now and get full access to our app. </p>
+          <Formik
+            initialValues={{
+              businessName: '',
+              email: '',
+              category: '',
+              state: '',
+              phoneNumber: '',
+              address: '',
+              password: '',
+              confirmPassword: ''
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleRegister}
+          >
+            {({ isSubmitting }) => (
+              <Form className="form">
+                <p className="title">Register</p>
+                <p className="message">Signup now and get full access to our app.</p>
 
-            <label>
-              <input required placeholder="" type="text" className="input" />
-              <span>Business name</span>
-            </label>
+                <label>
+                  <Field name="businessName" type="text" className="input" placeholder="" />
+                  <span>Business name</span>
+                  <ErrorMessage name="businessName" component="div" className="error" />
+                </label>
 
-            <label>
-              <input required placeholder="" type="email" className="input" />
-              <span>Email</span>
-            </label>
+                <label>
+                  <Field name="email" type="email" className="input" placeholder="" />
+                  <span>Email</span>
+                  <ErrorMessage name="email" component="div" className="error" />
+                </label>
 
-            <label>
-                <select required className="input">
-                  <option value="" disabled selected></option>
-                  <option value="plumber">Plumber</option>
-                  <option value="tailor">Tailor</option>
-                  <option value="carpenter">Carpenter</option>
-                  <option value="electrician">Electrician</option>
-                  <option value="painter">Painter</option>
-                </select>
-                <span>Category</span>
-            </label>
+                <label>
+                  <Field name="category" as="select" className="input">
+                    <option value="" disabled selected></option>
+                    <option value="plumber">Plumber</option>
+                    <option value="tailor">Tailor</option>
+                    <option value="carpenter">Carpenter</option>
+                    <option value="electrician">Electrician</option>
+                    <option value="painter">Painter</option>
+                  </Field>
+                  <span>Category</span>
+                  <ErrorMessage name="category" component="div" className="error" />
+                </label>
 
-            <div className="flex">
+                <div className="flex">
+                  <label>
+                    <Field name="state" as="select" className="input">
+                      <option value="" disabled selected></option>
+                      <option value="Lagos">Lagos</option>
+                      <option value="Abuja">Abuja</option>
+                      <option value="Kano">Kano</option>
+                      <option value="Rivers">Rivers</option>
+                      <option value="Kaduna">Kaduna</option>
+                      {/* Add more Nigerian states here */}
+                    </Field>
+                    <span>State</span>
+                    <ErrorMessage name="state" component="div" className="error" />
+                  </label>
 
-            <label>
-              <select required className="input">
-                <option value="" disabled selected></option>
-                <option value="Lagos">Lagos</option>
-                <option value="Abuja">Abuja</option>
-                <option value="Kano">Kano</option>
-                <option value="Rivers">Rivers</option>
-                <option value="Kaduna">Kaduna</option>
-                {/* Add more Nigerian states here */}
-              </select>
-              <span>State</span>
-            </label>
+                  <label>
+                    <Field name="phoneNumber" type="tel" className="input" placeholder="" />
+                    <span>Phone number</span>
+                    <ErrorMessage name="phoneNumber" component="div" className="error" />
+                  </label>
+                </div>
 
-              <label>
-                <input required placeholder="" type="tel" className="input" />
-                <span>Phone number</span>
-              </label>
-            </div>
+                <label>
+                  <Field name="address" type="text" className="input" placeholder="" />
+                  <span>Address</span>
+                  <ErrorMessage name="address" component="div" className="error" />
+                </label>
 
-            <label>
-              <input required placeholder="" type="text" className="input" />
-              <span>Address</span>
-            </label>
+                <div className="flex">
+                  <label>
+                    <Field name="password" type="password" className="input" placeholder="" />
+                    <span>Password</span>
+                    <ErrorMessage name="password" component="div" className="error" />
+                  </label>
 
-            <div className="flex">
-              <label>
-                <input required placeholder="" type="password" className="input" />
-                <span>Password</span>
-              </label>
-              <label>
-                <input required placeholder="" type="password" className="input" />
-                <span>Confirm password</span>
-              </label>
-            </div>
+                  <label>
+                    <Field name="confirmPassword" type="password" className="input" placeholder="" />
+                    <span>Confirm password</span>
+                    <ErrorMessage name="confirmPassword" component="div" className="error" />
+                  </label>
+                </div>
 
-            <button className="submit">Submit</button>
-            <p className="signin">
-              Already have an account? <Link to="/login">Signin</Link>{" "}
-            </p>
-          </form>
+                <button type="submit" className="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Registering...' : 'Submit'}
+                </button>
+
+                <p className="signin">
+                  Already have an account? <Link to="/login">Signin</Link>
+                </p>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </StyledWrapper>
