@@ -6,6 +6,10 @@ import { darkBrown } from '../../../util/colors';
 import Form1 from './form1';
 import { orange, red } from '@mui/material/colors';
 import Form2 from './form2';
+import Form3 from './form3';
+import Form4 from './form4';
+import Form5 from './form5';
+import Form6 from './form6';
 
 const theme = createTheme({
     palette: {
@@ -33,6 +37,14 @@ const StepperPage = () => {
           return <Form1 onNext={handleNext}/>;
         case 1:
           return <Form2 onNext={handleNext} onPrev={handleBack} />;
+        case 2:
+          return <Form3 onNext={handleNext} onPrev={handleBack} />;
+        case 3:
+          return <Form4 onNext={handleNext} onPrev={handleBack} />;
+        case 4:
+          return <Form5 onNext={handleNext} onPrev={handleBack} />;
+        case 5:
+          return <Form6 onNext={handleNext} onPrev={handleBack} />;
         default:
           return 'Unknown step';
       }
@@ -58,6 +70,9 @@ const StepperPage = () => {
           </Step>
           <Step>
             <StepLabel>Availability</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel><p>Password</p></StepLabel>
           </Step>
         </Stepper>
         </ThemeProvider>
