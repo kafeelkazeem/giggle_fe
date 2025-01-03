@@ -3,10 +3,13 @@ import { Box, Typography, TextField, Button } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useFormContext } from '../../../context/registerFormContext';
 
 const Form6 = ({ onNext, onPrev }) => {
-  const { formData, setFormData } = useFormContext();
+  // Initial form values
+  const initialValues = {
+    password: '',
+    confirmPassword: '',
+  };
 
   // Validation schema
   const validationSchema = Yup.object({
@@ -20,13 +23,11 @@ const Form6 = ({ onNext, onPrev }) => {
 
   return (
     <Formik
-      initialValues={{
-        password: formData.password || '',
-        confirmPassword: formData.confirmPassword || '',
-      }}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        setFormData((prev) => ({ ...prev, ...values }));
+        console.log('Form Values:', values);
+        onNext(values);
       }}
     >
       {(formik) => (
