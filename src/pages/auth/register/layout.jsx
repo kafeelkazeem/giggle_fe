@@ -10,6 +10,7 @@ import Form3 from './form3';
 import Form4 from './form4';
 import Form5 from './form5';
 import Form6 from './form6';
+import { GlobalProvider } from '../../../context/registerFormContext';
 
 const theme = createTheme({
     palette: {
@@ -24,11 +25,11 @@ const StepperPage = () => {
     const [activeStep, setActiveStep] = useState(0); // Tracks the current step of the stepper
     
     const handleNext = () => {
-      activeStep === 5 ? navigate('/') :  setActiveStep((prevActiveStep) => prevActiveStep + 1) // Move to the next step
+      setActiveStep((prevActiveStep) => prevActiveStep + 1) // Move to the next step
     };
   
     const handleBack = () => {
-      activeStep === 0 ? navigate('/') : setActiveStep((prevActiveStep) => prevActiveStep - 1); // Move to the previous step
+      setActiveStep((prevActiveStep) => prevActiveStep - 1); // Move to the previous step
     };
 
     const getStepContent = (step) => {
@@ -76,9 +77,11 @@ const StepperPage = () => {
           </Step>
         </Stepper>
         </ThemeProvider>
-        <Container maxWidth="none" className='min-h-[60vh] flex flex-col'>
-          {getStepContent(activeStep)}
-        </Container>
+        <GlobalProvider>
+          <Container maxWidth="none" className='min-h-[60vh] flex flex-col'>
+            {getStepContent(activeStep)}
+          </Container>
+        </GlobalProvider>
       </Container>
       </div>
       </>

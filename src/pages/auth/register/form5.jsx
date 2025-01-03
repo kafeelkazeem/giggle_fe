@@ -3,10 +3,9 @@ import { Box, Typography, Switch, FormControlLabel, TextField } from '@mui/mater
 import { LocalizationProvider, MobileTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Formik, Form } from 'formik';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import * as Yup from 'yup';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Button from '@mui/material/Button';
+import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
+import { useFormContext } from '../../../context/registerFormContext';
 
 const Form5 = ({ onNext, onPrev }) => {
   // Initial form values
@@ -18,24 +17,37 @@ const Form5 = ({ onNext, onPrev }) => {
 
   // Validation schema
   const validationSchema = Yup.object({
-    startTime: Yup.mixed().nullable().required('Start time is required'),
+    startTime: Yup.mixed()
+      .nullable()
+      .when('isAvailable', {
+        is: true,
+        then: Yup.mixed().nullable().required('Start time is required'),
+      }),
     endTime: Yup.mixed()
       .nullable()
-      .required('End time is required')
-      .test('is-after-start', 'End time must be after start time', function (value) {
-        const { startTime } = this.parent;
-        return startTime && value && value.isAfter(startTime);
+      .when('isAvailable', {
+        is: true,
+        then: Yup.mixed()
+          .nullable()
+          .required('End time is required')
+          .test('is-after-start', 'End time must be after start time', function (value) {
+            const { startTime } = this.parent;
+            return startTime && value && value.isAfter(startTime);
+          }),
       }),
   });
+
+  // Use form context to manage data
+  const { value, setValue } = useFormContext();
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Formik
-        initialValues={initialValues}
+        initialValues={{ ...initialValues, ...value }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          console.log('Form Values:', values);
-          onNext(values);
+          setValue((prev) => ({ ...prev, ...values })); // Save form data to context
+          onNext(); // Navigate to the next step
         }}
       >
         {(formik) => (
@@ -61,50 +73,45 @@ const Form5 = ({ onNext, onPrev }) => {
                     label={formik.values.isAvailable ? 'Available' : 'Not Available'}
                   />
 
-                  {/* Start Time Picker */}
-                  <MobileTimePicker
-                    label="Start Time"
-                    value={formik.values.startTime}
-                    onChange={(newValue) => formik.setFieldValue('startTime', newValue)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        error={formik.touched.startTime && Boolean(formik.errors.startTime)}
-                        helperText={formik.touched.startTime && formik.errors.startTime}
+                  {formik.values.isAvailable && (
+                    <>
+                      {/* Start Time Picker */}
+                      <MobileTimePicker
+                        label="Start Time"
+                        value={formik.values.startTime}
+                        onChange={(newValue) => formik.setFieldValue('startTime', newValue)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            fullWidth
+                            error={formik.touched.startTime && Boolean(formik.errors.startTime)}
+                            helperText={formik.touched.startTime && formik.errors.startTime}
+                          />
+                        )}
                       />
-                    )}
-                  />
 
-                  {/* End Time Picker */}
-                  <MobileTimePicker
-                    label="End Time"
-                    value={formik.values.endTime}
-                    onChange={(newValue) => formik.setFieldValue('endTime', newValue)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        error={formik.touched.endTime && Boolean(formik.errors.endTime)}
-                        helperText={formik.touched.endTime && formik.errors.endTime}
+                      {/* End Time Picker */}
+                      <MobileTimePicker
+                        label="End Time"
+                        value={formik.values.endTime}
+                        onChange={(newValue) => formik.setFieldValue('endTime', newValue)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            fullWidth
+                            error={formik.touched.endTime && Boolean(formik.errors.endTime)}
+                            helperText={formik.touched.endTime && formik.errors.endTime}
+                          />
+                        )}
                       />
-                    )}
-                  />
+                    </>
+                  )}
                 </Box>
-
-                <Box className="flex w-full justify-between mt-6 px-4">
-                  <Button variant="outlined" onClick={onPrev}>
-                    Previous
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    endIcon={<ArrowForwardIcon />}
-                  >
-                    Next
-                  </Button>
-                </Box>
+                {/* Navigation Buttons */}
+                <Prev_nxtBtn
+                  onNext={formik.handleSubmit} // Trigger form validation and save before navigating
+                  onPrev={onPrev} // Navigate to the previous step
+                />
               </div>
             </div>
           </Form>

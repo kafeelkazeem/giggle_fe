@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextField, Box, Typography, Button, IconButton } from '@mui/material';
 import { Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { darkBrown } from '../../../util/colors';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
+import { useFormContext } from '../../../context/registerFormContext';
 
 const Form4 = ({ onNext, onPrev }) => {
   // Initial form values
@@ -28,13 +28,16 @@ const Form4 = ({ onNext, onPrev }) => {
     ),
   });
 
+  // Use form context to save data
+  const { value, setValue } = useFormContext();
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{ ...initialValues, ...value }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log('Form Values:', values);
-        onNext(values);
+        setValue((prev) => ({ ...prev, ...values })); // Save current form data to context
+        onNext(); // Navigate to the next page
       }}
     >
       {(formik) => (
@@ -122,7 +125,11 @@ const Form4 = ({ onNext, onPrev }) => {
                   )}
                 </FieldArray>
               </Box>
-              <Prev_nxtBtn onNext={onNext} onPrev={onPrev} />
+              {/* Navigation Buttons */}
+              <Prev_nxtBtn
+                onNext={formik.handleSubmit} // Trigger form submission before moving to the next page
+                onPrev={onPrev} // Navigate to the previous page
+              />
             </div>
           </div>
         </Form>

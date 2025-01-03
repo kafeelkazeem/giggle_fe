@@ -3,8 +3,8 @@ import { TextField, Box, Typography, Button, MenuItem } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { darkBrown } from '../../../util/colors';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
+import { useFormContext } from '../../../context/registerFormContext';
 
 const Form2 = ({ onNext, onPrev }) => {
   // Initial form values
@@ -17,7 +17,7 @@ const Form2 = ({ onNext, onPrev }) => {
   // Validation schema
   const validationSchema = Yup.object({
     businessName: Yup.string().required('Input your business name'),
-    professions: Yup.string().required('Please select a profession'),
+    profession: Yup.string().required('Please select a profession'),
     description: Yup.string()
       .min(10, 'Description should be at least 10 characters')
       .required('Job description is required'),
@@ -32,13 +32,16 @@ const Form2 = ({ onNext, onPrev }) => {
     'Painter',
   ];
 
+  // Use form context to save data
+  const { value, setValue } = useFormContext();
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log('Form Values:', values);
-        onNext(values);
+        setValue((prev) => ({ ...prev, ...values })); // Save current form data to context
+        onNext(); // Navigate to the next page
       }}
     >
       {(formik) => (
@@ -53,17 +56,19 @@ const Form2 = ({ onNext, onPrev }) => {
               <Box className="w-full max-w-md space-y-6 mt-5">
                 {/* Business Name Field */}
                 <TextField
-                fullWidth
-                label="Business Name*"
-                name="businessName"
-                variant="outlined"
-                value={formik.values.businessName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.businessName && Boolean(formik.errors.businessName)}
-                helperText={formik.touched.businessName && formik.errors.businessName}
-                className="bg-transparent rounded"
-              />
+                  fullWidth
+                  label="Business Name*"
+                  name="businessName"
+                  variant="outlined"
+                  value={formik.values.businessName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.businessName && Boolean(formik.errors.businessName)}
+                  helperText={formik.touched.businessName && formik.errors.businessName}
+                  className="bg-transparent rounded"
+                />
+
+                {/* Profession Dropdown */}
                 <TextField
                   select
                   fullWidth
@@ -101,7 +106,12 @@ const Form2 = ({ onNext, onPrev }) => {
                   placeholder="I am an experienced professional with..."
                 />
               </Box>
-              <Prev_nxtBtn onNext={onNext} onPrev={onPrev} />
+
+              {/* Navigation Buttons */}
+              <Prev_nxtBtn
+                onNext={formik.handleSubmit} // Trigger form submission before moving to the next page
+                onPrev={onPrev} // Navigate to the previous page
+              />
             </div>
           </div>
         </Form>
