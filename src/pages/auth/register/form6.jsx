@@ -27,7 +27,6 @@ const Form6 = ({ onNext, onPrev }) => {
       validationSchema={validationSchema}
       onSubmit={(values) => {
         setFormData((prev) => ({ ...prev, ...values }));
-        onNext(values);
       }}
     >
       {(formik) => (
