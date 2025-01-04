@@ -1,13 +1,15 @@
-import React from 'react';
-import { Box, Typography, TextField, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, TextField, Button, CircularProgress } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useFormContext } from '../../../context/registerFormContext';
+import axios from 'axios';
+import { ApiUrl } from '../../../util/apiUrl';
 
 const Form6 = ({ onPrev }) => {
-
   const { value, setValue } = useFormContext();
+  const [loading, setLoading] = useState(false); // Loading state
 
   // Initial form values
   const initialValues = {
@@ -26,9 +28,22 @@ const Form6 = ({ onPrev }) => {
   });
 
   // Form submission handler
-  const handleSubmit = (values) => {
-    setValue((prev) => ({ ...prev, ...values })); // Merge values with existing context state
-    console.log(value)
+  const handleSubmit = async (values) => {
+    setLoading(true); // Start loading
+    try {
+      await setValue((prev) => ({ ...prev, ...values }));
+
+      const updatedValues = { ...value, ...values };
+
+      await axios.post(`${ApiUrl}/registerTechnician`, updatedValues);
+
+      alert('Submitted');
+    } catch (error) {
+      alert('An error occurred');
+      console.log(error);
+    } finally {
+      setLoading(false); // Stop loading
+    }
   };
 
   return (
@@ -80,16 +95,17 @@ const Form6 = ({ onPrev }) => {
               </Box>
 
               <Box className="flex w-full justify-between mt-6 px-4">
-                <Button variant="outlined" onClick={onPrev}>
+                <Button variant="outlined" onClick={onPrev} disabled={loading}>
                   Previous
                 </Button>
                 <Button
                   variant="contained"
                   color="success"
                   type="submit"
-                  endIcon={<ArrowForwardIcon />}
+                  endIcon={loading ? <CircularProgress size={20} color="inherit" /> : <ArrowForwardIcon />}
+                  disabled={loading} // Disable button while loading
                 >
-                  Register
+                  {loading ? 'Submitting...' : 'Register'}
                 </Button>
               </Box>
             </div>

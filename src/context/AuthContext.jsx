@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 import axios from 'axios';
-import { ApiUrl, localApiUrl } from '../util/apiUrl';
+import { ApiUrl } from '../util/apiUrl';
 
 // Create the context
 const AuthContext = createContext();
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   // Function to log in a user
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${localApiUrl}/technicianLogin`, {
+      const response = await axios.post(`${ApiUrl}/technicianLogin`, {
         email,
         password,
       });
