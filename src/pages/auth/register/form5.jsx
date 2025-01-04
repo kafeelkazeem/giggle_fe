@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Button from '@mui/material/Button';
 import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
+import { useFormContext } from '../../../context/registerFormContext';
 
 const Form5 = ({ onNext, onPrev }) => {
   // Initial form values
@@ -16,6 +17,9 @@ const Form5 = ({ onNext, onPrev }) => {
     startTime: null,
     endTime: null,
   };
+
+  // Use form context to save data
+  const { value, setValue } = useFormContext();
 
   // Validation schema
   const validationSchema = Yup.object({
@@ -35,8 +39,8 @@ const Form5 = ({ onNext, onPrev }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          console.log('Form Values:', values);
-          onNext(values);
+          setValue((prev) => ({ ...prev, ...values })); // Save current form data to context
+          onNext(); // Navigate to the next page
         }}
       >
         {(formik) => (
@@ -92,7 +96,7 @@ const Form5 = ({ onNext, onPrev }) => {
                     )}
                   />
                 </Box>
-                <Prev_nxtBtn onNext={onNext} onPrev={onPrev} />
+                <Prev_nxtBtn onNext={formik.handleSubmit} onPrev={onPrev} />
               </div>
             </div>
           </Form>

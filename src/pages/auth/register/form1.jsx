@@ -26,7 +26,6 @@ const Form1 = ({ onNext }) => {
   // Form submission handler
   const handleSubmit = (values) => {
     setValue((prev) => ({ ...prev, ...values })); // Merge values with existing context state
-    console.log(value)
     onNext(); // Move to the next page
   };
 
