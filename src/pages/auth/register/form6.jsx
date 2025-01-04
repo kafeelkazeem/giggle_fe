@@ -5,14 +5,15 @@ import * as Yup from 'yup';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useFormContext } from '../../../context/registerFormContext';
 
-const Form6 = ({ onNext, onPrev }) => {
-  // Initial form values
-  const initialValues = {
-    password: '',
-    confirmPassword: '',
-  };
+const Form6 = ({ onPrev }) => {
 
   const { value, setValue } = useFormContext();
+
+  // Initial form values
+  const initialValues = {
+    password: value.password ? value.password : '',
+    confirmPassword: value.confirmPassword ? value.confirmPassword : '',
+  };
 
   // Validation schema
   const validationSchema = Yup.object({

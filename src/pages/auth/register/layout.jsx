@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Stepper, Step, StepLabel, Container, ThemeProvider, createTheme } from '@mui/material';
 import {Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { darkBrown } from '../../../util/colors';
 import Form1 from './form1';
-import { orange, red } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 import Form2 from './form2';
 import Form3 from './form3';
 import Form4 from './form4';
@@ -19,8 +17,6 @@ const theme = createTheme({
   });
 
 const StepperPage = () => {
-
-    const navigate = useNavigate()
   
     const [activeStep, setActiveStep] = useState(0); // Tracks the current step of the stepper
     
@@ -45,7 +41,7 @@ const StepperPage = () => {
         case 4:
           return <Form5 onNext={handleNext} onPrev={handleBack} />;
         case 5:
-          return <Form6 onNext={handleNext} onPrev={handleBack} />;
+          return <Form6 onPrev={handleBack} />;
         default:
           return 'Unknown step';
       }

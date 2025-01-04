@@ -7,14 +7,15 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useFormContext } from '../../../context/registerFormContext';
 
 const Form1 = ({ onNext }) => {
-  // Initial form values
-  const initialValues = {
-    fullName: '',
-    email: '',
-    bio: '',
-  };
 
   const { value, setValue } = useFormContext();
+
+  // Initial form values
+  const initialValues = {
+    fullName: value.fullName ? value.fullName : '',
+    email: value.email ? value.email : '',
+    bio: value.bio ? value.bio : '',
+  };
 
   // Validation schema
   const validationSchema = Yup.object({

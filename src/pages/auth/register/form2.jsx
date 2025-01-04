@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Box, Typography, Button, MenuItem } from '@mui/material';
+import { TextField, Box, Typography, MenuItem } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { darkBrown } from '../../../util/colors';
@@ -7,11 +7,15 @@ import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
 import { useFormContext } from '../../../context/registerFormContext';
 
 const Form2 = ({ onNext, onPrev }) => {
+
+  // Use form context to save data
+  const { value, setValue } = useFormContext();
+
   // Initial form values
   const initialValues = {
-    businessName: '',
-    profession: '',
-    description: '',
+    businessName: value.businessName ? value.businessName : '',
+    profession: value.profession ? value.profession : '',
+    description: value.description ? value.description : '',
   };
 
   // Validation schema
@@ -31,9 +35,6 @@ const Form2 = ({ onNext, onPrev }) => {
     'Plumber',
     'Painter',
   ];
-
-  // Use form context to save data
-  const { value, setValue } = useFormContext();
 
   return (
     <Formik

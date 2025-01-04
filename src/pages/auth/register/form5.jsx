@@ -3,23 +3,22 @@ import { Box, Typography, Switch, FormControlLabel, TextField } from '@mui/mater
 import { LocalizationProvider, MobileTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Formik, Form } from 'formik';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import * as Yup from 'yup';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Button from '@mui/material/Button';
 import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
 import { useFormContext } from '../../../context/registerFormContext';
+import dayjs from 'dayjs';
 
 const Form5 = ({ onNext, onPrev }) => {
+
+   // Use form context to save data
+   const { value, setValue } = useFormContext();
+
   // Initial form values
   const initialValues = {
-    isAvailable: false,
-    startTime: null,
-    endTime: null,
+    isAvailable: value.isAvailable ? value.isAvailable : false,
+    startTime: value.startTime ? value.startTime : dayjs('2022-04-17T8:00'),
+    endTime: value.endTime ? value.endTime : dayjs('2022-04-17T16:00') ,
   };
-
-  // Use form context to save data
-  const { value, setValue } = useFormContext();
 
   // Validation schema
   const validationSchema = Yup.object({

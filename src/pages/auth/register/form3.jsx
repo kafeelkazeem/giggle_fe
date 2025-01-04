@@ -7,10 +7,14 @@ import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
 import { useFormContext } from '../../../context/registerFormContext';
 
 const Form3 = ({ onNext, onPrev }) => {
+
+  // Use form context to save data
+  const { value, setValue } = useFormContext();
+
   // Initial form values
   const initialValues = {
-    address: '',
-    state: '',
+    address: value.address ? value.address : '',
+    state: value.state ? value.state : '',
   };
 
   // Validation schema
@@ -29,9 +33,6 @@ const Form3 = ({ onNext, onPrev }) => {
     'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
     'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara', 'FCT',
   ];
-
-  // Use form context to save data
-  const { value, setValue } = useFormContext();
 
   return (
     <Formik

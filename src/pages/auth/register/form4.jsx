@@ -9,11 +9,15 @@ import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
 import { useFormContext } from '../../../context/registerFormContext';
 
 const Form4 = ({ onNext, onPrev }) => {
+
+  // Use form context to save data
+  const { value, setValue } = useFormContext();
+
   // Initial form values
   const initialValues = {
-    phoneNumber: '',
-    whatsappNumber: '',
-    socialLinks: [''],
+    phoneNumber: value.phoneNumber ? value.phoneNumber : '',
+    whatsappNumber: value.whatsappNumber ? value.whatsappNumber : '',
+    socialLinks: value.socialLinks ? value.socialLinks : [''],
   };
 
   // Validation schema
@@ -27,9 +31,6 @@ const Form4 = ({ onNext, onPrev }) => {
       Yup.string().url('Invalid URL').notRequired()
     ),
   });
-
-  // Use form context to save data
-  const { value, setValue } = useFormContext();
 
   return (
     <Formik
