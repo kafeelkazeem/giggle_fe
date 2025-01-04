@@ -9,15 +9,14 @@ import { useFormContext } from '../../../context/registerFormContext';
 import dayjs from 'dayjs';
 
 const Form5 = ({ onNext, onPrev }) => {
-
-   // Use form context to save data
-   const { value, setValue } = useFormContext();
+  // Use form context to save data
+  const { value, setValue } = useFormContext();
 
   // Initial form values
   const initialValues = {
-    isAvailable: value.isAvailable ? value.isAvailable : false,
-    startTime: value.startTime ? value.startTime : dayjs('2022-04-17T8:00'),
-    endTime: value.endTime ? value.endTime : dayjs('2022-04-17T16:00') ,
+    isAvailable: value.isAvailable || false,
+    startTime: value.startTime ? dayjs(value.startTime) : dayjs('2022-04-17T08:00'),
+    endTime: value.endTime ? dayjs(value.endTime) : dayjs('2022-04-17T16:00'),
   };
 
   // Validation schema
@@ -38,8 +37,18 @@ const Form5 = ({ onNext, onPrev }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          setValue((prev) => ({ ...prev, ...values })); // Save current form data to context
-          onNext(); // Navigate to the next page
+          // Format times to ISO strings before saving
+          const formattedValues = {
+            ...values,
+            startTime: values.startTime?.toISOString(),
+            endTime: values.endTime?.toISOString(),
+          };
+
+          // Save formatted values to context
+          setValue((prev) => ({ ...prev, ...formattedValues }));
+
+          // Navigate to the next page
+          onNext();
         }}
       >
         {(formik) => (
