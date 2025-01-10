@@ -38,15 +38,17 @@ const Form1 = ({ onNext }) => {
     >
       {(formik) => (
         <Form>
-          <div className="w-full h-screen flex justify-center items-center px-4 lg:px-20 bg-transparent">
+          
+        </Form>
+        /*<Form>
+          <div className="w-full h-fit bg-red-600 flex justify-center px-4 lg:px-20 bg-transparent border-2">
             <div
-              className={`w-4/5 h-fit border-4 rounded-lg p-5 flex justify-start items-center flex-col -mt-20 border-[${darkBrown}]`}
+              className={`lg:w-4/5 w-full h-fit rounded-lg p-5 flex justify-start border-2 flex-col -mt-32`}
             >
               <Typography variant="h5" className="mb-10 text-gray-800 font-bold">
                 Personal Details
               </Typography>
-              <Box className="w-full max-w-md space-y-6 mt-5">
-                {/* Full Name Field */}
+              <div className="w-full space-y-6 mt-5">
                 <TextField
                   fullWidth
                   label="Full Name*"
@@ -59,7 +61,6 @@ const Form1 = ({ onNext }) => {
                   helperText={formik.touched.fullName && formik.errors.fullName}
                   className="bg-transparent rounded"
                 />
-                {/* Email Field */}
                 <TextField
                   fullWidth
                   label="Email*"
@@ -72,7 +73,6 @@ const Form1 = ({ onNext }) => {
                   helperText={formik.touched.email && formik.errors.email}
                   className="bg-transparent rounded"
                 />
-                {/* Bio Field */}
                 <TextField
                   fullWidth
                   label="Bio"
@@ -88,7 +88,7 @@ const Form1 = ({ onNext }) => {
                   multiline
                   rows={4}
                 />
-              </Box>
+              </div>
               <div className="w-full flex justify-end p-2 px-6">
                 <Button
                   type="submit"
@@ -101,7 +101,7 @@ const Form1 = ({ onNext }) => {
               </div>
             </div>
           </div>
-        </Form>
+        </Form>*/
       )}
     </Formik>
   );
