@@ -92,7 +92,7 @@ const StepperPage = () => {
           </Stepper>
         </ThemeProvider>
         <GlobalProvider>
-          <Container maxWidth="none" className="min-h-[60vh] bg-gray-800 flex flex-col">
+          <Container maxWidth="none" className="h-fit flex flex-col">
             {getStepContent(activeStep)}
           </Container>
         </GlobalProvider>
@@ -107,10 +107,10 @@ const S = () => {
       <AppBar position="sticky" sx={{ backgroundColor: darkBrown }}>
         <Toolbar>
           {/* Logo Section */}
-          <img src={Logo} alt="Logo" style={{ height: '85px', marginRight: '10px' }} />
+          <img src={Logo} alt="Logo" className='h-[85px] -ml-9' />
         </Toolbar>
       </AppBar>
-      <Container maxWidth="none" className="min-h-[80vh] flex flex-col justify-between overflow-hidden w-full h-screen bg-white">
+      <Container maxWidth="none" className="h-fit flex flex-col justify-between overflow-hidden w-full bg-white">
         <Stack mt={3} spacing={4}>
           <StepperPage />
         </Stack>

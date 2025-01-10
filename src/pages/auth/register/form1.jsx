@@ -1,26 +1,25 @@
-import React from 'react';
-import { TextField, Box, Typography, Button } from '@mui/material';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { darkBrown } from '../../../util/colors';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useFormContext } from '../../../context/registerFormContext';
+import React from "react";
+import { Typography, Box, Button } from "@mui/material";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useFormContext } from "../../../context/registerFormContext";
+import { darkBrown } from "../../../util/colors";
 
 const Form1 = ({ onNext }) => {
-
   const { value, setValue } = useFormContext();
 
   // Initial form values
   const initialValues = {
-    fullName: value.fullName ? value.fullName : '',
-    email: value.email ? value.email : '',
-    bio: value.bio ? value.bio : '',
+    fullName: value.fullName ? value.fullName : "",
+    email: value.email ? value.email : "",
+    bio: value.bio ? value.bio : "",
   };
 
   // Validation schema
   const validationSchema = Yup.object({
-    fullName: Yup.string().required('Full Name is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
+    fullName: Yup.string().required("Full Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
     bio: Yup.string(),
   });
 
@@ -38,70 +37,138 @@ const Form1 = ({ onNext }) => {
     >
       {(formik) => (
         <Form>
-          
-        </Form>
-        /*<Form>
-          <div className="w-full h-fit bg-red-600 flex justify-center px-4 lg:px-20 bg-transparent border-2">
-            <div
-              className={`lg:w-4/5 w-full h-fit rounded-lg p-5 flex justify-start border-2 flex-col -mt-32`}
+          <div
+            className={`w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border-2 h-fit mt-5 p-2 justify-center items-center`}
+          >
+            <Typography
+              variant="h3"
+              className="tracking-wider"
+              sx={{
+                fontWeight: "bold",
+                textAlign: "center",
+                mb: 3,
+                color: darkBrown,
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
+              }}
             >
-              <Typography variant="h5" className="mb-10 text-gray-800 font-bold">
-                Personal Details
-              </Typography>
-              <div className="w-full space-y-6 mt-5">
-                <TextField
-                  fullWidth
-                  label="Full Name*"
-                  name="fullName"
-                  variant="outlined"
-                  value={formik.values.fullName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.fullName && Boolean(formik.errors.fullName)}
-                  helperText={formik.touched.fullName && formik.errors.fullName}
-                  className="bg-transparent rounded"
-                />
-                <TextField
-                  fullWidth
-                  label="Email*"
-                  name="email"
-                  variant="outlined"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  className="bg-transparent rounded"
-                />
-                <TextField
-                  fullWidth
-                  label="Bio"
-                  name="bio"
-                  variant="outlined"
-                  value={formik.values.bio}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.bio && Boolean(formik.errors.bio)}
-                  helperText={formik.touched.bio && formik.errors.bio}
-                  className="bg-transparent rounded"
-                  placeholder="I am an experienced electrician with 10+ years of experience. I provide ......"
-                  multiline
-                  rows={4}
-                />
+              Personal Details
+            </Typography>
+            <div className="w-[75%] bg-transparent flex flex-col gap-4">
+              {/* Full Name Field */}
+              <div>
+                <label htmlFor="fullName" className="block text-gray-800 font-semibold text-sm">Full Name*</label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="fullName"
+                    id="fullName"
+                    className={`block w-[60%] h-16 rounded-md py-1.5 px-2 ring-1 ring-[${darkBrown}] ring-inset${
+                      formik.touched.fullName && formik.errors.fullName
+                        ? "ring-red-500"
+                        : "ring-gray-400"
+                    } focus:text-gray-800`}
+                    value={formik.values.fullName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
+                {formik.touched.fullName && formik.errors.fullName && (
+                  <label className="pt-1 block text-red-500 text-sm">
+                    {formik.errors.fullName}
+                  </label>
+                )}
               </div>
-              <div className="w-full flex justify-end p-2 px-6">
+
+              {/* Email Field */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-gray-800 font-semibold text-sm"
+                >
+                  Email*
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className={`block w-full rounded-md py-1.5 px-2 ring-1 ring-inset ${
+                      formik.touched.email && formik.errors.email
+                        ? "ring-red-500"
+                        : "ring-gray-400"
+                    } focus:text-gray-800`}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
+                {formik.touched.email && formik.errors.email && (
+                  <label className="pt-1 block text-red-500 text-sm">
+                    {formik.errors.email}
+                  </label>
+                )}
+              </div>
+
+              {/* Bio Field */}
+              <div>
+                <label
+                  htmlFor="bio"
+                  className="block text-gray-800 font-semibold text-sm"
+                >
+                  Bio
+                </label>
+                <div className="mt-2">
+                  <textarea
+                    name="bio"
+                    id="bio"
+                    rows={4}
+                    placeholder="I am an experienced electrician with 10+ years of experience. I provide ......"
+                    className={`block w-full rounded-md py-1.5 px-2 ring-1 ring-inset ${
+                      formik.touched.bio && formik.errors.bio
+                        ? "ring-red-500"
+                        : "ring-gray-400"
+                    } focus:text-gray-800`}
+                    value={formik.values.bio}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  ></textarea>
+                </div>
+                {formik.touched.bio && formik.errors.bio && (
+                  <label className="pt-1 block text-red-500 text-sm">
+                    {formik.errors.bio}
+                  </label>
+                )}
+              </div>
+
+              <Box
+                sx={{
+                  width: { xs: "90%", sm: "75%" },
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  mt: 3,
+                }}
+              >
                 <Button
                   type="submit"
-                  variant="outlined"
-                  color="primary"
-                  className={`px-6 py-2 bg-[${darkBrown}] text-white rounded`}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: darkBrown,
+                    color: "#fff",
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: "8px",
+                    "&:hover": {
+                      backgroundColor: darkBrown,
+                      opacity: 0.9,
+                    },
+                  }}
                 >
                   <ArrowForwardIcon />
                 </Button>
-              </div>
+              </Box>
             </div>
           </div>
-        </Form>*/
+        </Form>
       )}
     </Formik>
   );
