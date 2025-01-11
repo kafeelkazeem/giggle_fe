@@ -5,14 +5,16 @@ import Home from './pages/home';
 import Login from './pages/auth/login';
 import { AuthProvider } from './context/AuthContext';
 import S from './pages/auth/register/layout';
+import LandingPage from './pages/landingPage';
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
           <Routes>
+            <Route path='/' element={<LandingPage />} />
             <Route path='/home' element={<Home />} />
-            <Route path='/' element={<S />} />
+            <Route path='/register' element={<S />} />
             <Route path='/login' element={<Login />} />
           </Routes>
       </BrowserRouter>

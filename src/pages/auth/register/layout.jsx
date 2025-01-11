@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Container, ThemeProvider, createTheme, AppBar, Toolbar, Typography } from '@mui/material';
+import { Stepper, Step, StepLabel, Container, ThemeProvider, createTheme } from '@mui/material';
 import { Stack } from '@mui/material';
 import Form1 from './form1';
 import Form2 from './form2';
@@ -9,7 +9,7 @@ import Form5 from './form5';
 import Form6 from './form6';
 import { GlobalProvider } from '../../../context/registerFormContext';
 import { darkBrown } from '../../../util/colors';
-import Logo from '../../../assets/imgaes/cover.png';
+import ApBar from '../../../components/appBar';
 
 const theme = createTheme({
   palette: {
@@ -104,12 +104,7 @@ const StepperPage = () => {
 const S = () => {
   return (
     <div>
-      <AppBar position="sticky" sx={{ backgroundColor: darkBrown }}>
-        <Toolbar>
-          {/* Logo Section */}
-          <img src={Logo} alt="Logo" className='h-[85px] -ml-9' />
-        </Toolbar>
-      </AppBar>
+      <ApBar />
       <Container maxWidth="none" className="h-fit flex flex-col justify-between overflow-hidden w-full bg-white">
         <Stack mt={3} spacing={4}>
           <StepperPage />

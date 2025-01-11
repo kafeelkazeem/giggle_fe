@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from "styled-components";
 import { darkBrown, darkGreen } from "../../util/colors";
+import ApBar from '../../components/appBar';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const Login = () => {
     const success = await login(email, password); // Wait for login to complete
     if (success) {
       navigate('/home');
+    }else{
+      alert('An error occured')
     }
   };
 
@@ -24,8 +27,10 @@ const Login = () => {
   });
 
   return (
+    <>
+    <ApBar />
     <StyledWrapper>
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-[80vh] flex justify-center items-center">
         <div className="p-5 shadow-lg rounded-sm">
           <Formik
             initialValues={{ email: '', password: '' }}
@@ -40,13 +45,13 @@ const Login = () => {
                 <label>
                   <Field name="email" type="email" className="input" placeholder="" />
                   <span>Email</span>
-                  <ErrorMessage name="email" component="div" className="error" />
+                  <ErrorMessage name="email" component="div" className="error text-red-500" />
                 </label>
 
                 <label>
                   <Field name="password" type="password" className="input" placeholder="" />
                   <span>Password</span>
-                  <ErrorMessage name="password" component="div" className="error" />
+                  <ErrorMessage name="password" component="div" className="error text-red-500" />
                 </label>
 
                 <button type="submit" className="submit" disabled={isSubmitting}>
@@ -54,7 +59,7 @@ const Login = () => {
                 </button>
 
                 <p className="signin">
-                  Don't have an account? <Link to="/">Register</Link>
+                  Don't have an account? <Link to="/register">Register</Link>
                 </p>
               </Form>
             )}
@@ -62,6 +67,7 @@ const Login = () => {
         </div>
       </div>
     </StyledWrapper>
+    </>
   );
 };
 
@@ -69,7 +75,7 @@ const StyledWrapper = styled.div`
   .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 25px;
   max-width: 350px;
   background-color: #fff;
   padding: 20px;

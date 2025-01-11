@@ -38,7 +38,7 @@ const Form1 = ({ onNext }) => {
       {(formik) => (
         <Form className="flex justify-center items-center">
           <div
-            className={`lg:w-[80%] w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border-2 h-fit mt-5 p-2 justify-center items-center`}
+            className={`lg:w-[80%] w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border-1 h-fit mt-5 p-2 justify-center items-center shadow-xl`}
           >
             <Typography
               variant="h3"

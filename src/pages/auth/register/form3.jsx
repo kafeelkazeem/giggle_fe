@@ -45,7 +45,7 @@ const Form3 = ({ onNext, onPrev }) => {
     >
       {(formik) => (
         <Form className="flex justify-center items-center">
-          <div className={`lg:w-[80%] w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border-2 h-fit mt-5 lg:mt-10 p-2 justify-center items-center`}>
+          <div className={`lg:w-[80%] w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border shadow-xl h-fit mt-5 lg:mt-10 p-2 justify-center items-center`}>
             <Typography
               variant="h3"
               className="tracking-wider"
