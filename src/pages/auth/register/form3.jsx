@@ -44,60 +44,66 @@ const Form3 = ({ onNext, onPrev }) => {
       }}
     >
       {(formik) => (
-        <Form>
-          <div className="w-full h-screen flex justify-center items-center px-4 lg:px-20 bg-transparent">
-            <div
-              className={`w-4/5 h-fit border-4 rounded-lg p-5 flex justify-start items-center flex-col -mt-20 border-[${darkBrown}]`}
+        <Form className="flex justify-center items-center">
+          <div className={`lg:w-[80%] w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border-2 h-fit mt-5 lg:mt-10 p-2 justify-center items-center`}>
+            <Typography
+              variant="h3"
+              className="tracking-wider"
+              sx={{
+                fontWeight: "bold",
+                textAlign: "center",
+                mb: 3,
+                color: darkBrown,
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
+              }}
             >
-              <Typography variant="h5" className="mb-10 text-gray-800 font-bold">
-                Address Information
-              </Typography>
-              <Box className="w-full max-w-md space-y-6 mt-5">
-                {/* Address Field */}
-                <TextField
-                  fullWidth
-                  label="Address*"
-                  name="address"
-                  variant="outlined"
-                  value={formik.values.address}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.address && Boolean(formik.errors.address)}
-                  helperText={formik.touched.address && formik.errors.address}
-                  className="bg-transparent rounded"
-                  multiline
-                  rows={2}
-                  placeholder="Enter your full address"
-                />
-
-                {/* State Field */}
-                <TextField
-                  select
-                  fullWidth
-                  label="State"
-                  name="state"
-                  variant="outlined"
-                  value={formik.values.state}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.state && Boolean(formik.errors.state)}
-                  helperText={formik.touched.state && formik.errors.state}
-                  className="bg-transparent rounded"
-                >
-                  {states.map((state) => (
-                    <MenuItem key={state} value={state}>
-                      {state}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Box>
-
-              {/* Navigation Buttons */}
-              <Prev_nxtBtn
-                onNext={formik.handleSubmit} // Trigger form submission before moving to the next page
-                onPrev={onPrev} // Navigate to the previous page
+              Address Information
+            </Typography>
+            <Box className="w-full max-w-md space-y-6 mt-5">
+              {/* Address Field */}
+              <TextField
+                fullWidth
+                label="Address*"
+                name="address"
+                variant="outlined"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.address && Boolean(formik.errors.address)}
+                helperText={formik.touched.address && formik.errors.address}
+                className="bg-transparent rounded"
+                multiline
+                rows={2}
+                placeholder="Enter your full address"
               />
-            </div>
+
+              {/* State Field */}
+              <TextField
+                select
+                fullWidth
+                label="State"
+                name="state"
+                variant="outlined"
+                value={formik.values.state}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.state && Boolean(formik.errors.state)}
+                helperText={formik.touched.state && formik.errors.state}
+                className="bg-transparent rounded"
+              >
+                {states.map((state) => (
+                  <MenuItem key={state} value={state}>
+                    {state}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Box>
+
+            {/* Navigation Buttons */}
+            <Prev_nxtBtn
+              onNext={formik.handleSubmit} // Trigger form submission before moving to the next page
+              onPrev={onPrev} // Navigate to the previous page
+            />
           </div>
         </Form>
       )}

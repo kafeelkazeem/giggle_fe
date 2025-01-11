@@ -36,9 +36,9 @@ const Form1 = ({ onNext }) => {
       onSubmit={handleSubmit}
     >
       {(formik) => (
-        <Form>
+        <Form className="flex justify-center items-center">
           <div
-            className={`w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border-2 h-fit mt-5 p-2 justify-center items-center`}
+            className={`lg:w-[80%] w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border-2 h-fit mt-5 p-2 justify-center items-center`}
           >
             <Typography
               variant="h3"
@@ -53,7 +53,7 @@ const Form1 = ({ onNext }) => {
             >
               Personal Details
             </Typography>
-            <div className="w-[75%] bg-transparent flex flex-col gap-4">
+            <div className="w-[75%] bg-transparent flex flex-col gap-2">
               {/* Full Name Field */}
               <div>
                 <label htmlFor="fullName" className="block text-gray-800 font-semibold text-sm">Full Name*</label>
@@ -62,7 +62,7 @@ const Form1 = ({ onNext }) => {
                     type="text"
                     name="fullName"
                     id="fullName"
-                    className={`block w-[60%] h-16 rounded-md py-1.5 px-2 ring-1 ring-[${darkBrown}] ring-inset${
+                    className={`block lg:w-[90%] w-full h-10 lg:h-14 rounded-md py-1.5 px-2 ring-1 ring-gray-400 ring-inset${
                       formik.touched.fullName && formik.errors.fullName
                         ? "ring-red-500"
                         : "ring-gray-400"
@@ -92,7 +92,7 @@ const Form1 = ({ onNext }) => {
                     type="email"
                     name="email"
                     id="email"
-                    className={`block w-full rounded-md py-1.5 px-2 ring-1 ring-inset ${
+                    className={`block lg:w-[90%] w-full h-10 lg:h-14 rounded-md py-1.5 px-2 ring-1 ring-gray-400 ring-inset ${
                       formik.touched.email && formik.errors.email
                         ? "ring-red-500"
                         : "ring-gray-400"
@@ -123,7 +123,7 @@ const Form1 = ({ onNext }) => {
                     id="bio"
                     rows={4}
                     placeholder="I am an experienced electrician with 10+ years of experience. I provide ......"
-                    className={`block w-full rounded-md py-1.5 px-2 ring-1 ring-inset ${
+                    className={`block rounded-md py-1.5 px-2 ring-1 ring-inset lg:w-[90%] w-full ${
                       formik.touched.bio && formik.errors.bio
                         ? "ring-red-500"
                         : "ring-gray-400"
@@ -139,33 +139,23 @@ const Form1 = ({ onNext }) => {
                   </label>
                 )}
               </div>
-
-              <Box
+            </div>
+            <div className="w-full flex justify-end mt-2 p-3">
+              <Button
+                type="submit"
+                variant="contained"
+                className='px-4 py-1 rounded-md'
                 sx={{
-                  width: { xs: "90%", sm: "75%" },
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  mt: 3,
-                }}
-              >
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
+                  backgroundColor: darkBrown,
+                  color: "#fff",
+                  "&:hover": {
                     backgroundColor: darkBrown,
-                    color: "#fff",
-                    px: 4,
-                    py: 1.5,
-                    borderRadius: "8px",
-                    "&:hover": {
-                      backgroundColor: darkBrown,
-                      opacity: 0.9,
-                    },
-                  }}
+                    opacity: 0.9,
+                  },
+                }}
                 >
-                  <ArrowForwardIcon />
-                </Button>
-              </Box>
+                Next <ArrowForwardIcon />
+              </Button>
             </div>
           </div>
         </Form>
