@@ -9,10 +9,10 @@ const ApBar = () => {
     <AppBar position="sticky" sx={{ backgroundColor: darkBrown }}>
       <Toolbar className="flex justify-between items-center">
         {/* Logo Section */}
-        <Link to='/'><img src={Logo} alt="Logo" className="lg:h-[85px] h-[75px] -ml-9" /></Link>
+        <Link to='/'><img src={Logo} alt="Logo" className="lg:h-[85px] h-[80px] -ml-9" /></Link>
 
         {/* Navigation Buttons */}
-        <Box className="flex gap-4">
+        <Box className="flex lg:gap-4 gap-1">
           <NavLink
             to="/register"
             className={({ isActive }) =>
