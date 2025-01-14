@@ -11,8 +11,8 @@ const Home = () => {
   return (
     <div className='w-full h-fit'>
       <AppBar2 />
-      <div>
-        <p className='text-lg tracking-wider font-bold'>Dash Board</p>
+      <div className='p-4'>
+        <p className='text-2xl tracking-wider font-bold'>Profile</p>
       </div>
     </div>
   )

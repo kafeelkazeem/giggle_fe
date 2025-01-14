@@ -21,10 +21,10 @@ const AppBar2 = () => {
   };
 
   const menuItems = [
-    { text: 'Profile', icon: <AccountCircleIcon />, route: '/home' },
-    { text: 'Reviews', icon: <ReviewsIcon />, route: '/reviews' },
-    { text: 'Change Password', icon: <LockOpenIcon />, route: '/changePassword' },
-    { text: 'Logout', icon: <LogoutIcon />, action: () => alert('Logging out...') },
+    { text: 'Profile', icon: <AccountCircleIcon color={darkBrown} />, route: '/home' },
+    { text: 'Reviews', icon: <ReviewsIcon color={darkBrown} />, route: '/reviews' },
+    { text: 'Change Password', icon: <LockOpenIcon color={darkBrown} />, route: '/changePassword' },
+    { text: 'Logout', icon: <LogoutIcon color='red' />, action: () => alert('Logging out...') },
   ];
 
   return (
