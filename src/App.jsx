@@ -6,6 +6,8 @@ import Login from './pages/auth/login';
 import { AuthProvider } from './context/AuthContext';
 import S from './pages/auth/register/layout';
 import LandingPage from './pages/landingPage';
+import ChangePassword from './pages/changePassword';
+import Reviews from './pages/reviews';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Routes>
             <Route path='/' element={<LandingPage />} />
             <Route path='/home' element={<Home />} />
+            <Route path='/reviews' element={<Reviews />} />
+            <Route path='/changePassword' element={<ChangePassword />} />
             <Route path='/register' element={<S />} />
             <Route path='/login' element={<Login />} />
           </Routes>

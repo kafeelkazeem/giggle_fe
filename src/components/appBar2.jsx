@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
-import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import EditIcon from '@mui/icons-material/Edit'
-import LogoutIcon from '@mui/icons-material/Logout'
-import HomeIcon from '@mui/icons-material/Home'
-import SettingsIcon from '@mui/icons-material/Settings'
+import React, { useState } from 'react';
+import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Logo from '../assets/imgaes/cover.png';
-import { darkBrown } from '../util/colors'
+import { darkBrown } from '../util/colors';
+import { useNavigate } from 'react-router-dom';
 
 const AppBar2 = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return
+      return;
     }
-    setDrawerOpen(open)
-  }
+    setDrawerOpen(open);
+  };
 
   const menuItems = [
-    { text: 'Home', icon: <HomeIcon /> },
-    { text: 'Profile', icon: <AccountCircleIcon /> },
-    { text: 'Edit Profile', icon: <EditIcon /> },
-    { text: 'Settings', icon: <SettingsIcon /> },
-    { text: 'Logout', icon: <LogoutIcon /> },
-  ]
+    { text: 'Profile', icon: <AccountCircleIcon />, route: '/home' },
+    { text: 'Reviews', icon: <ReviewsIcon />, route: '/reviews' },
+    { text: 'Change Password', icon: <LockOpenIcon />, route: '/changePassword' },
+    { text: 'Logout', icon: <LogoutIcon />, action: () => alert('Logging out...') },
+  ];
 
   return (
     <div>
@@ -39,9 +39,6 @@ const AppBar2 = () => {
           {/* Logo */}
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
             <img src={Logo} alt="Logo" className="lg:h-[85px] h-[80px] w-auto" />
-            {/* <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              Dashboard
-            </Typography> */}
           </Box>
 
           {/* Profile Icon */}
@@ -60,7 +57,17 @@ const AppBar2 = () => {
           <Divider />
           <List>
             {menuItems.map((item, index) => (
-              <ListItem button key={index}>
+              <ListItem
+                button
+                key={index}
+                onClick={() => {
+                  if (item.route) {
+                    navigate(item.route);
+                  } else if (item.action) {
+                    item.action();
+                  }
+                }}
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItem>
@@ -69,7 +76,7 @@ const AppBar2 = () => {
         </Box>
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default AppBar2
+export default AppBar2;
