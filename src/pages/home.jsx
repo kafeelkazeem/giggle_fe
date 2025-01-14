@@ -11,8 +11,11 @@ const Home = () => {
   return (
     <div className='w-full h-fit'>
       <AppBar2 />
-      <div className='p-4'>
+      <div className='p-4 w-full h-fit'>
         <p className='text-2xl tracking-wider font-bold'>Profile</p>
+        <div>
+          
+        </div>
       </div>
     </div>
   )

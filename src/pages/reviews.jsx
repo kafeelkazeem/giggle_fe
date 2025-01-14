@@ -1,7 +1,13 @@
 import React from 'react'
 import AppBar2 from '../components/appBar2'
+import { useAuth } from '../context/AuthContext';
 
 const Reviews = () => {
+    const { user } = useAuth();
+
+    if (!user) {
+      return <h2>Please log in to access this page.</h2>;
+    }
   return (
     <div>
         <AppBar2 />
