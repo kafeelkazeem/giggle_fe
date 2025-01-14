@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext';
+import AppBar2 from '../components/appBar2';
 
 const Home = () => {
     const { user } = useAuth();
@@ -8,9 +9,9 @@ const Home = () => {
       return <h2>Please log in to access this page.</h2>;
     }
   return (
-    <h1>
-      I am home
-    </h1>
+    <div className='w-full h-fit'>
+      <AppBar2 />
+    </div>
   )
 }
 export default Home
