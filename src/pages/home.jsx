@@ -10,13 +10,17 @@ import { darkBrown } from '../util/colors';
 import EmailIcon from '@mui/icons-material/Email';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { professions } from '../util/professions'; 
+import axios from 'axios';
+import { ApiUrl } from '../util/apiUrl';
 
 const Home = () => {
+  const token = localStorage.getItem('token')
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [businessName, setBusinessName] = useState('John Doe Furnitures');
   const [category, setCategory] = useState('Carpenter');
   const [address, setAddress] = useState('Gwarzo road, Kano State');
+  const [loading, setLoading] = useState(false)
 
   const [tempBusinessName, setTempBusinessName] = useState(businessName);
   const [tempCategory, setTempCategory] = useState(category);
@@ -44,12 +48,27 @@ const Home = () => {
     setTempAddress(address);
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
-    setBusinessName(tempBusinessName);
-    setCategory(tempCategory);
-    setAddress(tempAddress);
-    console.log({ businessName: tempBusinessName, category: tempCategory, address: tempAddress });
+  const handleSave = async () => {
+    setLoading(true)
+    const formData = { businessName: tempBusinessName, profession: tempCategory, address: tempAddress };
+    try {
+      const response = await axios.put(`${ApiUrl}/updateTechnicianProfile`, formData,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
+      setIsEditing(false);
+      setBusinessName(tempBusinessName);
+      setCategory(tempCategory);
+      setAddress(tempAddress);
+    } catch (error) {
+      console.log(error)
+      alert('An error occured')      
+    }finally{
+      setLoading(false)
+    }
   };
 
   return (
@@ -140,7 +159,7 @@ const Home = () => {
             {isEditing ? (
               <>
                 <Button variant="contained" color='success' onClick={handleSave}>
-                  Save
+                  {loading ? 'Saving...' : 'Save'}
                 </Button>
                 <Button variant="outlined" color="warning" onClick={handleCancel}>
                   Cancel
