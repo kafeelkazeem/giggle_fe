@@ -5,7 +5,7 @@ import Avatar from '../assets/imgaes/avater.png';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import EditIcon from '@mui/icons-material/Edit';
-import { Rating, TextField, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { Rating, TextField, Button, MenuItem, Select, InputLabel, FormControl, CircularProgress, Skeleton } from '@mui/material';
 import { darkBrown } from '../util/colors';
 import EmailIcon from '@mui/icons-material/Email';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -21,11 +21,13 @@ const Home = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [businessName, setBusinessName] = useState('');
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   const [category, setCategory] = useState('');
   const [address, setAddress] = useState('');
-  const [avgRating, setAvgRating] = useState(null)
+  const [avgRating, setAvgRating] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [uploading, setUploading] = useState(false);
 
   // Temporary states for editing
   const [tempBusinessName, setTempBusinessName] = useState('');
@@ -45,11 +47,13 @@ const Home = () => {
           setBusinessName(response.data.myProfile.businessName);
           setCategory(response.data.myProfile.profession);
           setAddress(response.data.myProfile.location.address);
-          setEmail(response.data.myProfile.email)
-          setAvgRating(response.data.myProfile.rating.avgRatings)
+          setEmail(response.data.myProfile.email);
+          setAvgRating(response.data.myProfile.rating.avgRatings);
         } catch (error) {
           console.log(error);
           alert('An error occurred');
+        } finally {
+          setIsFetching(false);
         }
       };
       getTechnicianProfile();
@@ -59,6 +63,7 @@ const Home = () => {
   const handleProfileUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
+      setUploading(true);
       try {
         const formData = new FormData();
         formData.append('profileImage', file);
@@ -75,6 +80,8 @@ const Home = () => {
       } catch (error) {
         console.error('Error uploading image:', error);
         alert('An error occurred while uploading the profile picture.');
+      } finally {
+        setUploading(false);
       }
     } else {
       alert('Please select a file to upload.');
@@ -125,13 +132,21 @@ const Home = () => {
           <div className="w-full h-full flex flex-col lg:flex-row lg:items-center items-start p-4 gap-5">
             <div className="relative flex justify-center items-center md:justify-start">
               <div className="relative">
-                <img
-                  src={profilePicture ? profilePicture : Avatar}
-                  alt="Profile"
-                  className="lg:w-56 lg:h-56 w-44 h-44 rounded-full border-4 border-double"
-                />
+                {isFetching ? (
+                  <Skeleton variant="circular" width={180} height={180} />
+                ) : (
+                  <img
+                    src={profilePicture ? profilePicture : Avatar}
+                    alt="Profile"
+                    className="lg:w-56 lg:h-56 w-44 h-44 rounded-full border-4 border-double"
+                  />
+                )}
                 <label htmlFor="profile-upload" className="absolute bottom-2 right-2 bg-white p-2 rounded-full shadow cursor-pointer">
-                  <CameraAltIcon className="text-gray-700" />
+                  {uploading ? (
+                    <CircularProgress size={24} />
+                  ) : (
+                    <CameraAltIcon className="text-gray-700" />
+                  )}
                   <input
                     id="profile-upload"
                     type="file"
@@ -144,7 +159,9 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between h-full lg:ml-5 lg:p-5 p-2 gap-4">
               <div className="flex flex-col gap-2">
-                {isEditing ? (
+                {isFetching ? (
+                  <Skeleton width="60%" height={40} />
+                ) : isEditing ? (
                   <TextField
                     value={tempBusinessName}
                     onChange={(e) => setTempBusinessName(e.target.value)}
@@ -156,10 +173,12 @@ const Home = () => {
                 )}
               </div>
               <p className="text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wide">
-                <EmailIcon /> {email}
+                {isFetching ? <Skeleton width="40%" /> : <><EmailIcon /> {email}</>}
               </p>
               <div className="flex flex-col gap-2">
-                {isEditing ? (
+                {isFetching ? (
+                  <Skeleton width="40%" />
+                ) : isEditing ? (
                   <FormControl fullWidth>
                     <InputLabel id="category-label">Profession</InputLabel>
                     <Select
@@ -182,7 +201,9 @@ const Home = () => {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                {isEditing ? (
+                {isFetching ? (
+                  <Skeleton width="40%" />
+                ) : isEditing ? (
                   <TextField
                     value={tempAddress}
                     onChange={(e) => setTempAddress(e.target.value)}
@@ -197,14 +218,14 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-1">
                 <p className="font-bold text-gray-600 ml-2 tracking-wide">Avg Rating</p>
-                <Rating value={avgRating} size="large" readOnly />
+                {isFetching ? <Skeleton width="20%" /> : <Rating value={avgRating} size="large" readOnly />}
               </div>
             </div>
           </div>
           <div className="w-full flex justify-end p-2 gap-2">
             {isEditing ? (
               <>
-                <Button variant="contained" color="success" onClick={handleSave}>
+                <Button variant="contained" color="success" onClick={handleSave} disabled={loading}>
                   {loading ? 'Saving...' : 'Save'}
                 </Button>
                 <Button variant="outlined" color="warning" onClick={handleCancel}>

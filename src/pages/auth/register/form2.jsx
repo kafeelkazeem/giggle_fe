@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { darkBrown } from '../../../util/colors';
 import Prev_nxtBtn from '../../../components/button/prev_nxtBtn';
 import { useFormContext } from '../../../context/registerFormContext';
+import { professions } from '../../../util/professions';
 
 const Form2 = ({ onNext, onPrev }) => {
 
@@ -26,15 +27,6 @@ const Form2 = ({ onNext, onPrev }) => {
       .min(10, 'Description should be at least 10 characters')
       .required('Job description is required'),
   });
-
-  // Professions list
-  const professions = [
-    'Tailor',
-    'Carpenter',
-    'Electrician',
-    'Plumber',
-    'Painter',
-  ];
 
   return (
     <Formik
