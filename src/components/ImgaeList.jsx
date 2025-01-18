@@ -1,13 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, CircularProgress } from '@mui/material';
 import { ImageList, ImageListItem } from '@mui/material';
 import axios from 'axios';
-import { ApiUrl } from '../util/apiUrl'; // Replace with your actual API URL
+import { ApiUrl } from '../util/apiUrl';
 
-const Image = ({ images: initialImages }) => {
-  const token = localStorage.getItem('token')
-  const [images, setImages] = useState(initialImages || []);
-  const [uploading, setUploading] = useState(false);
+const Image = () => {
+  const token = localStorage.getItem('token');
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false); // Loading state for fetching images
+  const [uploading, setUploading] = useState(false); // Loading state for image upload
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      setLoading(true); // Set loading to true before fetching data
+      try {
+        const response = await axios.get(`${ApiUrl}/getImages`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
+        setImages(response.data.images.pastJobsPicture); 
+      } catch (error) {
+        alert('An error occurred while fetching images.');
+        console.error(error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching data
+      }
+    };
+    fetchImages();
+  }, []); 
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -20,19 +41,17 @@ const Image = ({ images: initialImages }) => {
     setUploading(true);
 
     const formData = new FormData();
-    files.forEach((file) => formData.append('images', file)); // Backend should handle multiple files
+    files.forEach((file) => formData.append('images', file));
 
     try {
       const response = await axios.post(`${ApiUrl}/uploadPastJobsPictures`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-           Authorization: `${token}`
+          Authorization: `${token}`,
         },
       });
 
-      // Assuming the server responds with an array of uploaded image URLs
       const uploadedImages = response.data.images;
-      console.log(uploadedImages)
       setImages(uploadedImages);
       alert('Images uploaded successfully!');
     } catch (error) {
@@ -45,21 +64,24 @@ const Image = ({ images: initialImages }) => {
 
   return (
     <div>
-      {images.length > 0 ? (
-        <>
-          <ImageList cols={3} gap={8}>
-            {images.map((image, index) => (
-              <ImageListItem key={index}>
-                <img
-                  src={image} // Ensure the server sends image URLs
-                  alt={image.name || `Image ${index + 1}`}
-                  loading="lazy"
-                  style={{ objectFit: 'cover', borderRadius: 8 }}
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-        </>
+      {loading ? ( // Display loader while fetching images
+        <div className="w-full flex justify-center items-center">
+          <CircularProgress />
+        </div>
+      ) : images.length > 0 ? (
+        <ImageList cols={3} gap={8}>
+          {images.map((image, index) => (
+            <ImageListItem key={index}>
+              <img
+                className='h-20 w-20'
+                src={image} // Ensure the server sends image URLs
+                alt={image.name || `Image ${index + 1}`}
+                loading="lazy"
+                style={{ objectFit: 'cover', borderRadius: 8 }}
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
       ) : (
         <div className="w-full flex justify-center items-center">
           <p>No images available</p>
