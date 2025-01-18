@@ -40,7 +40,7 @@ const Login = () => {
             {({ isSubmitting }) => (
               <Form className="form">
                 <p className="title">Login</p>
-                <p className="message">Signup now and get full access to our app.</p>
+                <p className="message">Signin now and get full access to our app.</p>
 
                 <label>
                   <Field name="email" type="email" className="input" placeholder="" />

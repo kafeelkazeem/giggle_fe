@@ -12,6 +12,7 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { professions } from '../util/professions';
 import axios from 'axios';
 import { ApiUrl } from '../util/apiUrl';
+import Image from '../components/ImgaeList';
  
 const Home = () => {
   const { user } = useAuth();
@@ -31,6 +32,8 @@ const Home = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [loadingBio, setLoadingBio] = useState(false);
+
+  const [images, setImages] = useState([])
 
   // Temporary states for editing
   const [tempBusinessName, setTempBusinessName] = useState('');
@@ -190,6 +193,7 @@ const Home = () => {
                     accept="image/*"
                     onChange={handleProfileUpload}
                     className="hidden"
+                    disabled={uploading}
                   />
                 </label>
               </div>
@@ -334,6 +338,10 @@ const Home = () => {
                 </div>
             </div>
           )}
+      </div>
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded'>
+        <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
+        <Image images={images} />
       </div>
     </div>
   );
