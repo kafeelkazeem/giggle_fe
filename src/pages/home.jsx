@@ -12,12 +12,13 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { professions } from '../util/professions';
 import axios from 'axios';
 import { ApiUrl } from '../util/apiUrl';
-
+ 
 const Home = () => {
   const { user } = useAuth();
 
   // State variables
   const token = localStorage.getItem('token');
+  const [isEditingBio, setIsEditingBio] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [businessName, setBusinessName] = useState('');
@@ -25,14 +26,17 @@ const Home = () => {
   const [category, setCategory] = useState('');
   const [address, setAddress] = useState('');
   const [avgRating, setAvgRating] = useState(null);
+  const [bio, setBio] = useState('')
   const [loading, setLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [loadingBio, setLoadingBio] = useState(false);
 
   // Temporary states for editing
   const [tempBusinessName, setTempBusinessName] = useState('');
   const [tempCategory, setTempCategory] = useState('');
   const [tempAddress, setTempAddress] = useState('');
+  const [tempBio, setTempBio] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -43,12 +47,14 @@ const Home = () => {
               Authorization: `${token}`,
             },
           });
-          setProfilePicture(response.data.myProfile.profilePicture);
-          setBusinessName(response.data.myProfile.businessName);
-          setCategory(response.data.myProfile.profession);
-          setAddress(response.data.myProfile.location.address);
-          setEmail(response.data.myProfile.email);
-          setAvgRating(response.data.myProfile.rating.avgRatings);
+          const profile = response.data.myProfile
+          setProfilePicture(profile.profilePicture);
+          setBusinessName(profile.businessName);
+          setCategory(profile.profession);
+          setAddress(profile.location.address);
+          setEmail(profile.email);
+          setAvgRating(profile.rating.avgRatings);
+          setBio(profile.bio || 'No bio available.')
         } catch (error) {
           console.log(error);
           alert('An error occurred');
@@ -120,12 +126,43 @@ const Home = () => {
     }
   };
 
+  const handleBioEdit = () => {
+    setIsEditingBio(true);
+    setTempBio(bio);
+  };
+
+  const handleBioCancel = () => {
+    setIsEditingBio(false);
+  };
+
+  const handleBioSave = async () => {
+    setLoadingBio(true);
+    try {
+      await axios.put(
+        `${ApiUrl}/updateBio`,
+        { bio: tempBio },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      setBio(tempBio);
+      setIsEditingBio(false);
+    } catch (error) {
+      console.error('Error saving bio:', error);
+      alert('Failed to save bio. Please try again.');
+    } finally {
+      setLoadingBio(false);
+    }
+  };
+
   if (!user) {
     return <h2>Please log in to access this page.</h2>;
   }
 
   return (
-    <div className="w-full h-fit">
+    <div className="w-full h-fit pb-4">
       <AppBar2 />
       <div className="p-4 lg:w-[80%] w-full my-0 mx-auto h-fit">
         <div className="shadow rounded p-1">
@@ -244,6 +281,59 @@ const Home = () => {
             )}
           </div>
         </div>
+      </div>
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit'>
+        <div className="flex flex-col">
+            <p className="font-bold text-gray-600 tracking-wide text-lg">Bio</p>
+        </div> 
+        {isEditingBio ? (
+          <div className="mt-2">
+            <TextField
+              value={tempBio}
+              onChange={(e) => setTempBio(e.target.value)}
+              variant="outlined"
+              size="small"
+              fullWidth
+              multiline
+              rows={4}
+            />
+            <div className="flex justify-end gap-2 mt-2">
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleBioSave}
+                disabled={loadingBio}
+              >
+                {loadingBio ? 'Saving...' : 'Save'}
+              </Button>
+              <Button
+                variant="outlined"
+                color="warning"
+                onClick={handleBioCancel}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+          ) : (
+            <div className='flex flex-col'>
+              <div className='border w-full h-32 p-2'>
+                <p className="text-gray-600 mt-2">{bio}</p>
+              </div>
+                <div className='flex w-full justify-end p-2'>
+                  {!isEditingBio && (
+                    <Button
+                      variant="outlined"
+                      startIcon={<EditIcon />}
+                      onClick={handleBioEdit}
+                      size="small"
+                    >
+                      Edit
+                    </Button>
+                  )}
+                </div>
+            </div>
+          )}
       </div>
     </div>
   );
