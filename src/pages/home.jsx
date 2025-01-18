@@ -17,6 +17,7 @@ const Home = () => {
   const token = localStorage.getItem('token')
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null)
   const [businessName, setBusinessName] = useState('John Doe Furnitures');
   const [category, setCategory] = useState('Carpenter');
   const [address, setAddress] = useState('Gwarzo road, Kano State');
@@ -30,10 +31,31 @@ const Home = () => {
     return <h2>Please log in to access this page.</h2>;
   }
 
-  const handleProfileUpload = (e) => {
-    const file = e.target.files[0];
+  const handleProfileUpload = async (e) => {
+    const file = e.target.files[0]; // Get the selected file
     if (file) {
-      console.log('File uploaded:', file);
+      try {
+        // Create a FormData object to send the file
+        const formData = new FormData();
+        formData.append('profileImage', file); // Match 'profileImage' to the field expected by the backend
+  
+        // Make the POST request
+        const response = await axios.post(`${ApiUrl}/uploadProfilePicture`, formData, {
+          headers: {
+            'Authorization': `${token}`, // Add your auth token
+            'Content-Type': 'multipart/form-data', // Important for file uploads
+          },
+        });
+  
+        // Update the state with the uploaded image URL
+        setProfilePicture(response.data.url); // Assuming the backend sends the uploaded image URL
+        alert('Profile picture uploaded successfully!');
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        alert('An error occurred while uploading the profile picture.');
+      }
+    } else {
+      alert('Please select a file to upload.');
     }
   };
 
@@ -80,7 +102,7 @@ const Home = () => {
             <div className='relative flex justify-center items-center md:justify-start'>
               <div className='relative'>
                 <img
-                  src={Avatar}
+                  src={profilePicture ? profilePicture : Avatar}
                   alt="Profile"
                   className="lg:w-56 lg:h-56 w-44 h-44 rounded-full border-4 border-double"
                 />
