@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress } from '@mui/material';
+import { Button, CircularProgress, IconButton } from '@mui/material';
 import { ImageList, ImageListItem } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { ApiUrl } from '../util/apiUrl';
 
@@ -9,6 +10,7 @@ const Image = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false); // Loading state for fetching images
   const [uploading, setUploading] = useState(false); // Loading state for image upload
+  const [deletingImage, setDeletingImage] = useState(null); // Track the image being deleted
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -19,7 +21,7 @@ const Image = () => {
             Authorization: `${token}`,
           },
         });
-        setImages(response.data.images.pastJobsPicture); 
+        setImages(response.data.images.pastJobsPicture);
       } catch (error) {
         alert('An error occurred while fetching images.');
         console.error(error);
@@ -28,7 +30,7 @@ const Image = () => {
       }
     };
     fetchImages();
-  }, []); 
+  }, []);
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -53,12 +55,36 @@ const Image = () => {
 
       const uploadedImages = response.data.images;
       setImages(uploadedImages);
-      alert('Images uploaded successfully!');
     } catch (error) {
       console.error('Error uploading images:', error);
       alert('An error occurred while uploading images.');
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleDeleteImage = async (imageUrl) => {
+    if (!window.confirm('Are you sure you want to delete this image?')) return;
+
+    setDeletingImage(imageUrl); // Set the image being deleted
+    try {
+      const response = await axios.delete(`${ApiUrl}/deleteImage`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+        data: { imageUrl }, // Pass the image URL in the request body
+      });
+
+      if (response.data.success) {
+        setImages((prevImages) => prevImages.filter((image) => image !== imageUrl));
+      } else {
+        alert('Failed to delete image.');
+      }
+    } catch (error) {
+      console.error('Error deleting image:', error);
+      alert('An error occurred while deleting the image.');
+    } finally {
+      setDeletingImage(null); // Reset the deleting state
     }
   };
 
@@ -73,12 +99,29 @@ const Image = () => {
           {images.map((image, index) => (
             <ImageListItem key={index}>
               <img
-                className='h-20 w-20'
+                className="h-20 w-20"
                 src={image} // Ensure the server sends image URLs
-                alt={image.name || `Image ${index + 1}`}
+                alt={`Image ${index + 1}`}
                 loading="lazy"
                 style={{ objectFit: 'cover', borderRadius: 8 }}
               />
+              <div style={{ position: 'relative', textAlign: 'right', marginTop: 8 }}>
+                <IconButton
+                  color="error"
+                  size="small"
+                  onClick={() => handleDeleteImage(image)}
+                  disabled={deletingImage === image} // Disable button if this image is being deleted
+                >
+                  {deletingImage === image ? (
+                    <CircularProgress size={20} color="error" />
+                  ) : (
+                    <>
+                      Delete
+                      <DeleteIcon />
+                    </>
+                  )}
+                </IconButton>
+              </div>
             </ImageListItem>
           ))}
         </ImageList>

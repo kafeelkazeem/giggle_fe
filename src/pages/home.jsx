@@ -341,7 +341,7 @@ const Home = () => {
       </div>
       <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
-        <Image images={images} />
+        <Image />
       </div>
     </div>
   );
