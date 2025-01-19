@@ -5,7 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from "styled-components";
 import { darkBrown, darkGreen } from "../../util/colors";
-import ApBar from '../../components/appBar';
+import ApBar from '../../components/appBar/appBar';
 
 const Login = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React from 'react'
-import AppBar2 from '../components/appBar2'
 import { useAuth } from '../context/AuthContext';
+import AppBar2 from '../components/appBar/appBar2';
 
 const ChangePassword = () => {
     const { user } = useAuth();

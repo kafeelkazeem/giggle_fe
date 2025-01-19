@@ -9,7 +9,7 @@ import Form5 from './form5';
 import Form6 from './form6';
 import { GlobalProvider } from '../../../context/registerFormContext';
 import { darkBrown } from '../../../util/colors';
-import ApBar from '../../../components/appBar';
+import ApBar from '../../../components/appBar/appBar';
 
 const theme = createTheme({
   palette: {

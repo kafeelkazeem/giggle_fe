@@ -1,8 +1,8 @@
 import React from 'react';
 import { AppBar, Toolbar, Box } from '@mui/material';
 import { Link, NavLink } from 'react-router-dom';
-import Logo from '../assets/imgaes/cover.png';
-import { darkBrown } from '../util/colors';
+import Logo from '../../assets/imgaes/cover.png';
+import { darkBrown } from '../../util/colors';
 
 const ApBar = () => {
   return (

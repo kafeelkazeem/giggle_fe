@@ -5,8 +5,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import Logo from '../assets/imgaes/cover.png';
-import { darkBrown } from '../util/colors';
+import Logo from '../../assets/imgaes/cover.png';
+import { darkBrown } from '../../util/colors';
 import { useNavigate } from 'react-router-dom';
 
 const AppBar2 = () => {

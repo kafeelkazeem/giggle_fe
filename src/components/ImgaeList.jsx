@@ -95,11 +95,10 @@ const Image = () => {
           <CircularProgress />
         </div>
       ) : images.length > 0 ? (
-        <ImageList cols={3} gap={8}>
+        <ImageList cols={3} gap={8} variant='standard'>
           {images.map((image, index) => (
             <ImageListItem key={index}>
               <img
-                className="h-20 w-20"
                 src={image} // Ensure the server sends image URLs
                 alt={`Image ${index + 1}`}
                 loading="lazy"

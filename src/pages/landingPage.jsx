@@ -1,7 +1,7 @@
 import React from 'react'
-import ApBar from '../components/appBar'
 import { ReactComponent as LandingImg } from '../assets/svg/landingImg.svg'
 import { darkBrown } from '../util/colors'
+import ApBar from '../components/appBar/appBar'
 
 const LandingPage = () => {
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import AppBar2 from '../components/appBar2';
+import AppBar2 from '../components/appBar/appBar2';
 import Avatar from '../assets/imgaes/avater.png';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HandymanIcon from '@mui/icons-material/Handyman';
@@ -32,8 +32,6 @@ const Home = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [loadingBio, setLoadingBio] = useState(false);
-
-  const [images, setImages] = useState([])
 
   // Temporary states for editing
   const [tempBusinessName, setTempBusinessName] = useState('');
@@ -342,6 +340,10 @@ const Home = () => {
       <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
         <Image />
+      </div>
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit mt-3'>
+        <p className='font-bold text-gray-600 tracking-wide text-lg'>Contact</p>
+  
       </div>
     </div>
   );
