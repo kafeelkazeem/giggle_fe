@@ -29,7 +29,7 @@ const AppBar2 = () => {
 
   return (
     <div>
-      <AppBar position="sticky" sx={{ backgroundColor: darkBrown }}>
+      <AppBar position="fixed" sx={{ backgroundColor: darkBrown }}>
         <Toolbar>
           {/* Menu Button for Mobile */}
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>

@@ -165,7 +165,7 @@ const Home = () => {
   return (
     <div className="w-full h-fit pb-4">
       <AppBar2 />
-      <div className="p-4 lg:w-[80%] w-full my-0 mx-auto h-fit">
+      <div className="p-4 lg:w-[80%] w-full my-0 mx-auto h-fit mt-20">
         <div className="shadow rounded p-1">
           <div className="w-full h-full flex flex-col lg:flex-row lg:items-center items-start p-4 gap-5">
             <div className="relative flex justify-center items-center md:justify-start">
