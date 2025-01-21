@@ -174,7 +174,7 @@ const Home = () => {
       <ToastContainer className='mx-0 my-auto' />
       <div className="p-4 lg:w-[80%] w-full my-0 mx-auto h-fit mt-20">
         <div className="shadow rounded p-1">
-          <div className="w-full h-full flex flex-col lg:flex-row lg:items-center items-start p-4 gap-5">
+          <div className="w-full h-full flex flex-col md:flex-row lg:items-center items-start p-4 gap-5">
             <div className="relative flex justify-center items-center md:justify-start">
               <div className="relative">
                 {isFetching ? (
@@ -268,6 +268,17 @@ const Home = () => {
               </div>
             </div>
           </div>
+          <div className='w-full flex flex-col gap-2 p-4'>
+            <p className='font-bold text-gray-600 ml-2 tracking-wide'>Contact</p>
+            <div className='flex flex-row lg:gap-5 gap-1 tracking-wide'>
+              <CallIcon fontSize='medium' className='text-blue-600' /> 
+              <p className='text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider'>070809099900099</p>
+            </div>
+            <div className='flex flex-row gap-5 tracking-wide'>
+              <WhatsAppIcon fontSize='medium' className='text-[#24cc63]'/>
+              <p className='text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider'>070809099900099</p>
+            </div>
+          </div>
           <div className="w-full flex justify-end p-2 gap-2">
             {isEditing ? (
               <>
@@ -347,21 +358,6 @@ const Home = () => {
       <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
         <Image />
-      </div>
-      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit mt-3 shadow rounded'>
-        <p className='font-bold text-gray-600 tracking-wide text-lg'>Contact</p>
-        <div className='flex flex-col gap-3 lg:text-lg text-base p-2'>
-            <div className='flex flex-row lg:gap-5 gap-1 tracking-wide'>
-              <CallIcon fontSize='large' className='text-blue-600' /> 
-              <p>Phone Number: </p>
-              <p>070809099900099</p>
-            </div>
-            <div className='flex flex-row gap-5 tracking-wide'>
-              <WhatsAppIcon fontSize='large' className='text-[#24cc63]'/>
-              <p>Whatsapp: </p>
-              <p>070809099900099</p>
-            </div>
-        </div>
       </div>
     </div>
   );
