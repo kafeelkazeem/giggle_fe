@@ -8,6 +8,9 @@ import axios from 'axios';
 import { ApiUrl } from '../../../util/apiUrl';
 import { darkBrown } from '../../../util/colors';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Form6 = ({ onPrev }) => {
   const { value, setValue } = useFormContext();
@@ -39,9 +42,10 @@ const Form6 = ({ onPrev }) => {
 
       await axios.post(`${ApiUrl}/registerTechnician`, updatedValues);
 
-      alert('Submitted');
+      toast.success('Account registered')
+      
     } catch (error) {
-      alert('An error occurred');
+      toast.error('An error occurred');
       console.log(error);
     } finally {
       setLoading(false); // Stop loading
@@ -56,6 +60,7 @@ const Form6 = ({ onPrev }) => {
     >
       {(formik) => (
         <Form className="flex justify-center items-center">
+          <ToastContainer />
           <div className={`lg:w-[80%] w-full flex flex-col bg-[#f9f9f9] border-[${darkBrown}] rounded-xl border shadow-xl h-fit mt-3 lg:mt-10 p-2 justify-center items-center`}>
           <Typography
               variant="h3"

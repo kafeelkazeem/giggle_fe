@@ -15,6 +15,8 @@ import { ApiUrl } from '../util/apiUrl';
 import Image from '../components/ImgaeList';
 import CallIcon from '@mui/icons-material/Call';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
  
 const Home = () => {
   const { user } = useAuth();
@@ -60,7 +62,7 @@ const Home = () => {
           setBio(profile.bio || 'No bio available.')
         } catch (error) {
           console.log(error);
-          alert('An error occurred');
+          toast.error('An error occurred while fetching the profile.');
         } finally {
           setIsFetching(false);
         }
@@ -85,15 +87,15 @@ const Home = () => {
         });
 
         setProfilePicture(response.data.url);
-        alert('Profile picture uploaded successfully!');
+        toast.success('Profile picture uploaded successfully!');
       } catch (error) {
         console.error('Error uploading image:', error);
-        alert('An error occurred while uploading the profile picture.');
+        toast.error('An error occurred while uploading the profile picture.');
       } finally {
         setUploading(false);
       }
     } else {
-      alert('Please select a file to upload.');
+       toast.warn('Please select a file to upload.');
     }
   };
 
@@ -121,9 +123,10 @@ const Home = () => {
       setBusinessName(tempBusinessName);
       setCategory(tempCategory);
       setAddress(tempAddress);
+      toast.success('Profile updated successfully!');
     } catch (error) {
-      console.log(error);
-      alert('An error occurred');
+      console.error(error);
+      toast.error('An error occurred while updating the profile.');
     } finally {
       setLoading(false);
     }
@@ -152,9 +155,10 @@ const Home = () => {
       );
       setBio(tempBio);
       setIsEditingBio(false);
+      toast.success('Bio updated successfully!');
     } catch (error) {
       console.error('Error saving bio:', error);
-      alert('Failed to save bio. Please try again.');
+      toast.error('Failed to save bio. Please try again.');
     } finally {
       setLoadingBio(false);
     }
@@ -167,6 +171,7 @@ const Home = () => {
   return (
     <div className="w-full h-fit pb-4">
       <AppBar2 />
+      <ToastContainer className='mx-0 my-auto' />
       <div className="p-4 lg:w-[80%] w-full my-0 mx-auto h-fit mt-20">
         <div className="shadow rounded p-1">
           <div className="w-full h-full flex flex-col lg:flex-row lg:items-center items-start p-4 gap-5">

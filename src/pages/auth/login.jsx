@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import styled from "styled-components";
 import { darkBrown, darkGreen } from "../../util/colors";
 import ApBar from '../../components/appBar/appBar';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const Login = () => {
     if (success) {
       navigate('/home');
     }else{
-      alert('An error occured')
+      toast.error('An error occured')
     }
   };
 
@@ -31,6 +33,7 @@ const Login = () => {
     <ApBar />
     <StyledWrapper>
       <div className="w-full h-[80vh] flex justify-center items-center">
+        <ToastContainer />
         <div className="p-5 shadow-lg rounded-sm">
           <Formik
             initialValues={{ email: '', password: '' }}
