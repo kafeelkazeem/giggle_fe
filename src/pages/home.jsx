@@ -13,6 +13,8 @@ import { professions } from '../util/professions';
 import axios from 'axios';
 import { ApiUrl } from '../util/apiUrl';
 import Image from '../components/ImgaeList';
+import CallIcon from '@mui/icons-material/Call';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
  
 const Home = () => {
   const { user } = useAuth();
@@ -199,7 +201,7 @@ const Home = () => {
             <div className="flex flex-col justify-between h-full lg:ml-5 lg:p-5 p-2 gap-4">
               <div className="flex flex-col gap-2">
                 {isFetching ? (
-                  <Skeleton width="60%" height={40} />
+                  <Skeleton width="100%" height={40} />
                 ) : isEditing ? (
                   <TextField
                     value={tempBusinessName}
@@ -212,11 +214,11 @@ const Home = () => {
                 )}
               </div>
               <p className="text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wide">
-                {isFetching ? <Skeleton width="40%" /> : <><EmailIcon /> {email}</>}
+                {isFetching ? <Skeleton width="100%" /> : <><EmailIcon /> {email}</>}
               </p>
               <div className="flex flex-col gap-2">
                 {isFetching ? (
-                  <Skeleton width="40%" />
+                  <Skeleton width="100%" />
                 ) : isEditing ? (
                   <FormControl fullWidth>
                     <InputLabel id="category-label">Profession</InputLabel>
@@ -241,7 +243,7 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-2">
                 {isFetching ? (
-                  <Skeleton width="40%" />
+                  <Skeleton width="100%" />
                 ) : isEditing ? (
                   <TextField
                     value={tempAddress}
@@ -257,7 +259,7 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-1">
                 <p className="font-bold text-gray-600 ml-2 tracking-wide">Avg Rating</p>
-                {isFetching ? <Skeleton width="20%" /> : <Rating value={avgRating} size="large" readOnly />}
+                {isFetching ? <Skeleton width="100%" /> : <Rating value={avgRating} size="large" readOnly />}
               </div>
             </div>
           </div>
@@ -341,9 +343,20 @@ const Home = () => {
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
         <Image />
       </div>
-      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit mt-3'>
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit mt-3 shadow rounded'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Contact</p>
-  
+        <div className='flex flex-col gap-3 lg:text-lg text-base p-2'>
+            <div className='flex flex-row lg:gap-5 gap-1 tracking-wide'>
+              <CallIcon fontSize='large' className='text-blue-600' /> 
+              <p>Phone Number: </p>
+              <p>070809099900099</p>
+            </div>
+            <div className='flex flex-row gap-5 tracking-wide'>
+              <WhatsAppIcon fontSize='large' className='text-[#24cc63]'/>
+              <p>Whatsapp: </p>
+              <p>070809099900099</p>
+            </div>
+        </div>
       </div>
     </div>
   );

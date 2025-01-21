@@ -7,7 +7,7 @@ const LandingPage = () => {
   return (
     <div>
       <ApBar />
-      <div className='w-full h-fit flex flex-col lg:flex-row mt-20'>
+      <div className='w-full h-fit flex flex-col lg:flex-row'>
         <div className='basis-1/2 w-50 h-50 p-10'>
             <LandingImg />
         </div>
