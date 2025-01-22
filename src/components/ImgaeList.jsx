@@ -4,6 +4,8 @@ import { ImageList, ImageListItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { ApiUrl } from '../util/apiUrl';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Image = () => {
   const token = localStorage.getItem('token');
@@ -23,14 +25,14 @@ const Image = () => {
         });
         setImages(response.data.images.pastJobsPicture);
       } catch (error) {
-        alert('An error occurred while fetching images.');
+        toast.error('An error occurred while fetching images.');
         console.error(error);
       } finally {
         setLoading(false); // Set loading to false after fetching data
       }
     };
     fetchImages();
-  }, []);
+  }, [token]);
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -57,7 +59,7 @@ const Image = () => {
       setImages(uploadedImages);
     } catch (error) {
       console.error('Error uploading images:', error);
-      alert('An error occurred while uploading images.');
+      toast.error('An error occurred while uploading images.');
     } finally {
       setUploading(false);
     }
@@ -78,7 +80,7 @@ const Image = () => {
       if (response.data.success) {
         setImages((prevImages) => prevImages.filter((image) => image !== imageUrl));
       } else {
-        alert('Failed to delete image.');
+        toast.error('Failed to delete image.');
       }
     } catch (error) {
       console.error('Error deleting image:', error);
@@ -90,6 +92,7 @@ const Image = () => {
 
   return (
     <div>
+      <ToastContainer />
       {loading ? ( // Display loader while fetching images
         <div className="w-full flex justify-center items-center">
           <CircularProgress />
@@ -100,7 +103,7 @@ const Image = () => {
             <ImageListItem key={index}>
               <img
                 src={image} // Ensure the server sends image URLs
-                alt={`Image ${index + 1}`}
+                alt={`${index + 1}`}
                 loading="lazy"
                 style={{ objectFit: 'cover', borderRadius: 8 }}
               />

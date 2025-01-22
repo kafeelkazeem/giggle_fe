@@ -28,6 +28,8 @@ const Home = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [businessName, setBusinessName] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [whatsappNumber, setWhatsappNumber] = useState('')
   const [category, setCategory] = useState('');
   const [address, setAddress] = useState('');
   const [avgRating, setAvgRating] = useState(null);
@@ -42,6 +44,8 @@ const Home = () => {
   const [tempCategory, setTempCategory] = useState('');
   const [tempAddress, setTempAddress] = useState('');
   const [tempBio, setTempBio] = useState('');
+  const [tempWhatsappNumber, setTempWhatsappNumber] = useState('')
+  const [tempPhoneNumber, setTempPhoneNumber] = useState('')
 
   useEffect(() => {
     if (user) {
@@ -58,6 +62,8 @@ const Home = () => {
           setCategory(profile.profession);
           setAddress(profile.location.address);
           setEmail(profile.email);
+          setWhatsappNumber(profile.contact.WhatsAppNumber)
+          setPhoneNumber(profile.contact.phoneNumber)
           setAvgRating(profile.rating.avgRatings);
           setBio(profile.bio || 'No bio available.')
         } catch (error) {
@@ -104,6 +110,8 @@ const Home = () => {
     setTempBusinessName(businessName);
     setTempCategory(category);
     setTempAddress(address);
+    setWhatsappNumber(whatsappNumber)
+    setPhoneNumber(phoneNumber)
   };
 
   const handleCancel = () => {
@@ -123,6 +131,8 @@ const Home = () => {
       setBusinessName(tempBusinessName);
       setCategory(tempCategory);
       setAddress(tempAddress);
+      setWhatsappNumber(tempWhatsappNumber)
+      setPhoneNumber(tempWhatsappNumber)
       toast.success('Profile updated successfully!');
     } catch (error) {
       console.error(error);
@@ -272,11 +282,33 @@ const Home = () => {
             <p className='font-bold text-gray-600 ml-2 tracking-wide'>Contact</p>
             <div className='flex flex-row lg:gap-5 gap-1 tracking-wide'>
               <CallIcon fontSize='medium' className='text-blue-600' /> 
-              <p className='text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider'>070809099900099</p>
+              {isFetching ? (
+                  <Skeleton width="100%" height={40} />
+                ) : isEditing ? (
+                  <TextField
+                    value={tempPhoneNumber}
+                    onChange={(e) => setTempPhoneNumber(e.target.value)}
+                    variant="outlined"
+                    size="medium"
+                  />
+                ) : (
+                  <p className="text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider">{phoneNumber}</p>
+                )}
             </div>
-            <div className='flex flex-row gap-5 tracking-wide'>
+            <div className='flex flex-row gap-5 tracking-wider'>
               <WhatsAppIcon fontSize='medium' className='text-[#24cc63]'/>
-              <p className='text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider'>070809099900099</p>
+              {isFetching ? (
+                  <Skeleton width="100%" height={40} />
+                ) : isEditing ? (
+                  <TextField
+                    value={tempWhatsappNumber}
+                    onChange={(e) => setTempWhatsappNumber(e.target.value)}
+                    variant="outlined"
+                    size="medium"
+                  />
+                ) : (
+                  <p className="text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider">{whatsappNumber}</p>
+                )}
             </div>
           </div>
           <div className="w-full flex justify-end p-2 gap-2">
