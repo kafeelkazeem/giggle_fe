@@ -17,6 +17,7 @@ import CallIcon from '@mui/icons-material/Call';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Socials from '../components/socials';
  
 const Home = () => {
   const { user } = useAuth();
@@ -289,7 +290,7 @@ const Home = () => {
                     value={tempPhoneNumber}
                     onChange={(e) => setTempPhoneNumber(e.target.value)}
                     variant="outlined"
-                    size="medium"
+                    size="small"
                   />
                 ) : (
                   <p className="text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider">{phoneNumber}</p>
@@ -304,7 +305,7 @@ const Home = () => {
                     value={tempWhatsappNumber}
                     onChange={(e) => setTempWhatsappNumber(e.target.value)}
                     variant="outlined"
-                    size="medium"
+                    size="small"
                   />
                 ) : (
                   <p className="text-gray-600 lg:text-lg text-sm flex gap-2 tracking-wider">{whatsappNumber}</p>
@@ -390,6 +391,10 @@ const Home = () => {
       <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
         <Image />
+      </div>
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded'>
+        <p className='font-bold text-gray-600 tracking-wide text-lg'>Socials</p>
+        <Socials />
       </div>
     </div>
   );
