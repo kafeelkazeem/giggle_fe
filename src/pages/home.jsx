@@ -393,11 +393,11 @@ const Home = () => {
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
         <Image />
       </div>
-      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded mt-6'>
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded mt-8'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Socials</p>
         <Socials />
       </div>
-      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded mt-6'>
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded mt-8'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Customer Reviews</p>
         <Reviews />
       </div>
