@@ -8,8 +8,8 @@ import { AuthProvider } from './context/AuthContext';
 import S from './pages/auth/register/layout';
 import LandingPage from './pages/landingPage';
 import ChangePassword from './pages/changePassword';
-import Reviews from './pages/reviews';
 import { darkBrown } from './util/colors'; 
+import Availability from './pages/availability';
 
 // Define MUI theme with darkBrown as the primary color
 const theme = createTheme({
@@ -35,7 +35,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/availability" element={<Availability />} />
             <Route path="/changePassword" element={<ChangePassword />} />
             <Route path="/register" element={<S />} />
             <Route path="/login" element={<Login />} />

@@ -2,7 +2,7 @@ import React from 'react'
 import AppBar2 from '../components/appBar/appBar2';
 import { useAuth } from '../context/AuthContext';
 
-const Reviews = () => {
+const Availability = () => {
     const { user } = useAuth();
 
     if (!user) {
@@ -12,10 +12,10 @@ const Reviews = () => {
     <div>
         <AppBar2 />
         <div className='p-4 mt-20'>
-            <p className='text-2xl tracking-wider font-bold'>Reviews</p>
+            <p className='text-2xl tracking-wider font-bold'>Availability</p>
         </div>
     </div>
   )
 }
 
-export default Reviews
+export default Availability

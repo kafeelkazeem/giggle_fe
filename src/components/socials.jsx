@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { ApiUrl } from '../util/apiUrl';
@@ -120,13 +120,12 @@ const Socials = () => {
 
   return (
     <div className="w-full">
-      <ToastContainer />
       {loading ? (
         <div className="flex justify-center my-4">
           <CircularProgress />
         </div>
       ) : (
-        <div className="flex flex-row items-center justify-center gap-4">
+        <div className="flex lg:flex-row flex-col lg:items-center items-start lg:justify-center justify-start gap-4 p-1 pt-3 lg:pt-0">
           {socials.map((url, index) => {
             const platform = identifyPlatform(url);
             const IconComponent = platform ? socialIcons[platform] : null;

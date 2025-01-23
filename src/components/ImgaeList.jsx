@@ -4,7 +4,7 @@ import { ImageList, ImageListItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { ApiUrl } from '../util/apiUrl';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Image = () => {
@@ -92,7 +92,6 @@ const Image = () => {
 
   return (
     <div>
-      <ToastContainer />
       {loading ? ( // Display loader while fetching images
         <div className="w-full flex justify-center items-center">
           <CircularProgress />

@@ -3,7 +3,7 @@ import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListIt
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import ReviewsIcon from '@mui/icons-material/Reviews';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Logo from '../../assets/imgaes/cover.png';
 import { darkBrown } from '../../util/colors';
@@ -22,7 +22,7 @@ const AppBar2 = () => {
 
   const menuItems = [
     { text: 'Profile', icon: <AccountCircleIcon color={darkBrown} />, route: '/home' },
-    { text: 'Reviews', icon: <ReviewsIcon color={darkBrown} />, route: '/reviews' },
+    { text: 'Availability', icon: <AccessTimeIcon color={darkBrown} />, route: '/availability' },
     { text: 'Change Password', icon: <LockOpenIcon color={darkBrown} />, route: '/changePassword' },
     { text: 'Logout', icon: <LogoutIcon color='red' />, action: () => alert('Logging out...') },
   ];
