@@ -181,7 +181,7 @@ const Home = () => {
   }
 
   return (
-    <div className="w-full h-fit pb-4">
+    <div className="w-full h-fit pb-4 bg-[#f5f5f5]">
       <AppBar2 />
       <ToastContainer className='mx-0 my-auto' />
       <div className="p-4 lg:w-[80%] w-full my-0 mx-auto h-fit mt-20">
