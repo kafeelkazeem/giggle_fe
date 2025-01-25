@@ -24,7 +24,7 @@ const AppBar2 = () => {
     { text: 'Profile', icon: <AccountCircleIcon color={darkBrown} />, route: '/home' },
     { text: 'Availability', icon: <AccessTimeIcon color={darkBrown} />, route: '/availability' },
     { text: 'Change Password', icon: <LockOpenIcon color={darkBrown} />, route: '/changePassword' },
-    { text: 'Logout', icon: <LogoutIcon color='red' />, action: () => alert('Logging out...') },
+    { text: 'Logout', icon: <LogoutIcon color='red' />, action: () => navigate('/login') },
   ];
 
   return (
