@@ -1,6 +1,5 @@
 import React from 'react'
 import { ReactComponent as LandingImg } from '../assets/svg/landingImg.svg'
-import { darkBrown } from '../util/colors'
 import ApBar from '../components/appBar/appBar'
 
 const LandingPage = () => {
@@ -19,7 +18,7 @@ const LandingPage = () => {
                  Whether you're looking for skilled professionals or want to grow your technician business, our platform connects you to the right people, right when you need them.
             </p>
             <a
-                href="#"
+                href="/register"
                 className={`inline-flex items-center px-6 py-5 text-base font-semibold text-black transition-all duration-200 bg-[#f1c74f] mt-9 hover:bg-green-400 focus:bg-green-400`}
                 role="button"
             >

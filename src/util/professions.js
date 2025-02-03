@@ -1,1 +1,1 @@
-export const professions = ['Capenter', 'Electrician', 'Tailor', 'Plumber', 'Bricklayer', 'Mechanic', 'Painter', 'Hair Dresser']
+export const professions = ['Capenter', 'Electrician', 'Tailor', 'Plumber', 'Bricklayer', 'Mechanic', 'Painter', 'Fridge Repair', 'Ac Repair', 'Phone Repair', 'PC Repair', 'Photographer', 'Hair Dresser', 'Architect', 'POP', 'Aluminum', 'Welder', 'Tiles', 'Panel Beater', 'Caterer', 'Laundry', 'Electronic Repair', 'Makeup Artist', 'Vulcanizer', 'Cleaner']

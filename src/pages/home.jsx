@@ -122,7 +122,7 @@ const Home = () => {
 
   const handleSave = async () => {
     setLoading(true);
-    const formData = { businessName: tempBusinessName, profession: tempCategory, address: tempAddress };
+    const formData = { businessName: tempBusinessName, profession: tempCategory, address: tempAddress, phoneNumber: phoneNumber, WhatsappNumber: whatsappNumber };
     try {
       await axios.put(`${ApiUrl}/updateTechnicianProfile`, formData, {
         headers: {
@@ -134,7 +134,7 @@ const Home = () => {
       setCategory(tempCategory);
       setAddress(tempAddress);
       setWhatsappNumber(tempWhatsappNumber)
-      setPhoneNumber(tempWhatsappNumber)
+      setPhoneNumber(tempPhoneNumber)
       toast.success('Profile updated successfully!');
     } catch (error) {
       console.error(error);
