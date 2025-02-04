@@ -26,6 +26,7 @@ const Home = () => {
   // State variables
   const token = localStorage.getItem('token');
   const [isEditingBio, setIsEditingBio] = useState(false);
+  const [isEditingDescription, setIsEditingDescription] = useState(false)
   const [isEditing, setIsEditing] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [businessName, setBusinessName] = useState('');
@@ -36,16 +37,19 @@ const Home = () => {
   const [address, setAddress] = useState('');
   const [avgRating, setAvgRating] = useState(null);
   const [bio, setBio] = useState('')
+  const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [loadingBio, setLoadingBio] = useState(false);
+  const [loadingDescription, setLoadingDescription] = useState(false)
 
   // Temporary states for editing
   const [tempBusinessName, setTempBusinessName] = useState('');
   const [tempCategory, setTempCategory] = useState('');
   const [tempAddress, setTempAddress] = useState('');
   const [tempBio, setTempBio] = useState('');
+  const [tempDescripton, setTempDescription] = useState('')
   const [tempWhatsappNumber, setTempWhatsappNumber] = useState('')
   const [tempPhoneNumber, setTempPhoneNumber] = useState('')
 
@@ -68,6 +72,7 @@ const Home = () => {
           setPhoneNumber(profile.contact.phoneNumber)
           setAvgRating(profile.rating.avgRatings);
           setBio(profile.bio || 'No bio available.')
+          setDescription(profile.description || 'No description available')
         } catch (error) {
           console.log(error);
           toast.error('An error occurred while fetching the profile.');
@@ -149,9 +154,18 @@ const Home = () => {
     setTempBio(bio);
   };
 
+  const handleEditDescription = () =>{
+    setIsEditingDescription(true)
+    setTempDescription(description)
+  }
+
   const handleBioCancel = () => {
     setIsEditingBio(false);
   };
+
+  const handleDescriptionCancel = () =>{
+    setIsEditingDescription(false)
+  }
 
   const handleBioSave = async () => {
     setLoadingBio(true);
@@ -173,6 +187,29 @@ const Home = () => {
       toast.error('Failed to save bio. Please try again.');
     } finally {
       setLoadingBio(false);
+    }
+  };
+
+  const handleDescriptionSave = async () => {
+    setLoadingDescription(true);
+    try {
+      await axios.put(
+        `${ApiUrl}/updateDescription`,
+        { description: tempDescripton },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      setDescription(tempDescripton);
+      setIsEditingDescription(false);
+      toast.success('Description updated successfully!');
+    } catch (error) {
+      console.error('Error saving description:', error);
+      toast.error('Failed to save description. Please try again.');
+    } finally {
+      setLoadingDescription(false);
     }
   };
 
@@ -393,6 +430,61 @@ const Home = () => {
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Images</p>
         <Image />
       </div>
+
+      <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit'>
+        <div className="flex flex-col">
+            <p className="font-bold text-gray-600 tracking-wide text-lg">Description of Service</p>
+        </div> 
+        {isEditingDescription ? (
+          <div className="mt-2">
+            <TextField
+              value={tempDescripton}
+              onChange={(e) => setTempDescription(e.target.value)}
+              variant="outlined"
+              size="small"
+              fullWidth
+              multiline
+              rows={4}
+            />
+            <div className="flex justify-end gap-2 mt-2">
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleDescriptionSave}
+                disabled={loadingDescription}
+              >
+                {loadingDescription ? 'Saving...' : 'Save'}
+              </Button>
+              <Button
+                variant="outlined"
+                color="warning"
+                onClick={handleDescriptionCancel}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+          ) : (
+            <div className='flex flex-col'>
+              <div className='border w-full h-32 p-2'>
+                <p className="text-gray-600 mt-2">{description}</p>
+              </div>
+                <div className='flex w-full justify-end p-2'>
+                  {!isEditingDescription && (
+                    <Button
+                      variant="outlined"
+                      startIcon={<EditIcon />}
+                      onClick={handleEditDescription}
+                      size="small"
+                    >
+                      Edit
+                    </Button>
+                  )}
+                </div>
+            </div>
+          )}
+      </div>
+
       <div className='p-6 lg:w-[80%] w-full my-0 mx-auto h-fit shadow rounded mt-8'>
         <p className='font-bold text-gray-600 tracking-wide text-lg'>Socials</p>
         <Socials />
