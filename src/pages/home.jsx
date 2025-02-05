@@ -117,8 +117,8 @@ const Home = () => {
     setTempBusinessName(businessName);
     setTempCategory(category);
     setTempAddress(address);
-    setWhatsappNumber(whatsappNumber)
-    setPhoneNumber(phoneNumber)
+    setTempWhatsappNumber(whatsappNumber)
+    setTempPhoneNumber(phoneNumber)
   };
 
   const handleCancel = () => {
