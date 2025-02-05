@@ -127,7 +127,7 @@ const Home = () => {
 
   const handleSave = async () => {
     setLoading(true);
-    const formData = { businessName: tempBusinessName, profession: tempCategory, address: tempAddress, phoneNumber: phoneNumber, WhatsappNumber: whatsappNumber };
+    const formData = { businessName: tempBusinessName, profession: tempCategory, address: tempAddress, phoneNumber: phoneNumber, WhatsAppNumber: whatsappNumber };
     try {
       await axios.put(`${ApiUrl}/updateTechnicianProfile`, formData, {
         headers: {
