@@ -44,8 +44,9 @@ const Availability = () => {
           startTime: values.startTime.toISOString(),
           endTime: values.endTime.toISOString(),
       };
+       console.log(payload.isAvailable)
         try {
-            const response = await axios.put(`${ApiUrl}/updateAvalaibility`, {payload}, {
+            const response = await axios.put(`${ApiUrl}/updateAvalaibility`, {isAvailable: payload.isAvailable, startTime: payload.startTime, endTime: payload.endTime}, {
               headers: {
                 Authorization: `${token}`,
             },
